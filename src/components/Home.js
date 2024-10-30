@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getPost, getallusersforposts, increment, deleteItem } from "../redux/action";
+import { getPost, getallusersforposts, increment, deleteItem, addnewItem } from "../redux/action";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "./Header";
@@ -50,6 +50,12 @@ function Home() {
   function edititem(item) {
     navigate("/updateitem", { state: item });
   }
+  function addnewitem(itemcode,scanner) {
+    if (itemcode!=""){
+      dispatch(addnewItem(itemcode,scanner));
+      setSharethinking("")
+    }
+  }
   return (
     <div>
       {state.user != null ? (
@@ -65,13 +71,19 @@ function Home() {
                 onChange={sharethinkingonChange}
                 value={sharethinking}
               />
-              <Link
+              {/* <Link
                 to="/addnewitem"
                 state={sharethinking}
                 className="button-login share-button"
               >
                 Scan
-              </Link>
+              </Link> */}
+              <button
+                className="button-login share-button"
+                onClick={() => addnewitem(sharethinking,state.user.name)}
+              >
+                Scan
+              </button>
             </div>
             {/* {sortedposts.map((item, index) => (
               <Post
@@ -174,7 +186,7 @@ function Home() {
             <thead style={{color:"white"}}>
               <tr>
                 <td>Item Code</td>
-                <td>Item Name</td>
+                <td>Scanner</td>
                 <td>Action</td>
               </tr>
             </thead>
@@ -184,7 +196,7 @@ function Home() {
                     {item.itemcode} 
                   </td>
                   <td>
-                    {item.itemname} 
+                    {item.scanner} 
                   </td>
                     <td>
                         {/* <div style=
@@ -200,8 +212,8 @@ function Home() {
                             Edit
                         </button>
                         <button 
-                            style={{padding: "3px 10px"}}
-                            onClick={(e)=>deleteitem(item.id)} className="ms-1 btn btn-danger">
+                            style={{padding: "3px 10px",marginLeft:"20px"}}
+                            onClick={(e)=>deleteitem(item.id)} className="btn btn-danger">
                             Delete
                         </button>
                         

@@ -81,7 +81,7 @@ function Userprofile() {
             </div>
             <h1 className="home-body-name">{stateselector.user.name}</h1>
             <div className="share-thinking" style={{ marginTop: 80 }}>
-              <input
+              {/* <input
                 type="text"
                 className="form-control input-share"
                 id="inlineFormInputGroup"
@@ -95,7 +95,7 @@ function Userprofile() {
                 className="button-login share-button"
               >
                 Scan
-              </Link>
+              </Link> */}
             </div>
             {stateselector.user != null &&
               sortedposts != false &&

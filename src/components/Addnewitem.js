@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addnewpost, addnewitem } from "../redux/action";
+import { addnewpost, addnewItem } from "../redux/action";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import "../App.css";

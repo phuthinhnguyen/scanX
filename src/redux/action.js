@@ -276,7 +276,7 @@ export const deleteItem= (id) => {
 export const editItem = (form) => {
   return async (dispatch) => {
     const response = await axios.put(`${apiurlblogs}/${form.id}`, {
-      itemname: form.itemname,
+      scanner: form.scanner,
       itemcode: form.itemcode,
       createdAt: Date.now()
     });
@@ -287,13 +287,13 @@ export const editItem = (form) => {
   };
 };
 
-export const addnewitem = (form, user) => {
+export const addnewItem = (itemcode,scanner) => {
   return async (dispatch) => {
     const response = await axios.post(`${apiurlblogs}`, {
       createdAt: Date.now(),
       // userId: user.id,
-      itemcode: form.itemcode,
-      itemname: form.itemname,
+      itemcode: itemcode,
+      scanner: scanner,
     
     });
     dispatch({

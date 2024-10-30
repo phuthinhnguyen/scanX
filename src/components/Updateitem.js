@@ -20,9 +20,12 @@ function Updateitem() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const name = user.name;
+  console.log(name)
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const [form, setForm] = useState(state);
+  // const [form, setForm] = useState(state);
+  const [form, setForm] = useState({...state,scanner:name});
   useEffect(() => {
     if (user == null) {
       navigate("/");
@@ -64,15 +67,15 @@ function Updateitem() {
               <input
                 value={form.id} disabled style={{color:"white"}}
               ></input>
-              <h6>Item Name</h6>
-              <input
-                onChange={(e) => setForm({ ...form, itemname: e.target.value })}
-                value={form.itemname}
-              ></input>
-              <h6>Item code</h6>
+              <h6>Item Code</h6>
               <input
                 onChange={(e) => setForm({ ...form, itemcode: e.target.value })}
                 value={form.itemcode}
+              ></input>
+              <h6>Scanner</h6>
+              <input
+                disabled style={{color:"white"}}
+                value={user.name}
               ></input>
               <br></br>
               <div className="button-wrap">
