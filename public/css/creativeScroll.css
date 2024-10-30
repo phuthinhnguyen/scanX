@@ -27,9 +27,12 @@ html {
 :root {
 	--index: calc(1vw + 1vh);
 	--color-header: #f4efec;
-	--color-text: #cdc6c3;
+	/* --color-text: #cdc6c3; */
 	--gallery-gap: calc(var(--index) * 7.5);
-	--boldyellow: rgb(245, 204, 25);
+	/* --boldyellow: rgb(245, 204, 25); */
+	--boldyellow: rgb(24, 8, 172);
+	--color-text: white;
+	--buttonhover: rgb(14, 18, 231);
 }
 
 #signup {
@@ -43,10 +46,11 @@ html {
 	bottom: 20vh;
 	font-family: outfit-c;
 	font-size: 16px;
+	color: var(--color-text);
 }
 
 #signup:hover {
-	background-color: yellow;
+	background-color: var(--buttonhover);
 	cursor: pointer;
 }
 

@@ -31,10 +31,12 @@ html {
 
 
 :root {
-  --boldyellow: rgb(245, 204, 25);
+  /* --boldyellow: rgb(245, 204, 25); */
+  --boldyellow: rgb(24, 8, 172);
   --backgroundhead: black;
   --colortext: white;
-  --buttonhover: yellow;
+  /* --buttonhover: yellow; */
+  --buttonhover: rgb(14, 18, 231);
   --menuitemhover: rgb(232, 200, 25);
   --backgroundbody: rgb(24, 24, 24);
   --fonttext: outfit-c;
@@ -114,6 +116,7 @@ html {
   background-color: var(--boldyellow);
   border: none;
   display: block;
+  color: var(--colortext);
 }
 
 .button-signup-header-form:hover {
@@ -129,19 +132,22 @@ html {
 
 .header-link {
   text-decoration: none;
-  color: var(--boldyellow);
+  color: var(--colortext);
   text-align: center;
   font-size: 18px;
   margin-right: 20px;
   padding: 0 20px;
-  height: 30px;
+  height: 32px;
   border-radius: 20px;
-  background-color: var(--backgroundhead);
+  background-color: var(--boldyellow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .header-link:hover {
   background-color: var(--buttonhover);
-  color: black;
+  color: var(--colortext);
 }
 
 
@@ -159,8 +165,8 @@ html {
 }
 
 .usermenu:hover {
-  color: black;
-  background-color: var(--menuitemhover);
+  color: var(--colortext);
+  background-color: var(--buttonhover);
 }
 
 
@@ -212,7 +218,7 @@ form {
   padding: 5px 10px;
   text-align: center;
   text-decoration: none;
-  color: black;
+  color: var(--colortext);
   border-radius: 20px;
   background-color: var(--boldyellow);
   border: none;
@@ -224,7 +230,7 @@ form {
 
 .button-back:hover {
   background-color: var(--buttonhover);
-  color: black;
+  color: var(--colortext);
 }
 
 .button-signup {
@@ -342,6 +348,7 @@ form {
   background-color: var(--boldyellow);
   border: none;
   display: block;
+  color: var(--colortext);
 }
 
 .button-login:hover {
@@ -438,12 +445,12 @@ form {
   border-bottom-right-radius: 5px;
   font-family: var(--fonttext);
   text-decoration: none;
-  color: black;
+  color: var(--colortext);
   text-align: center;
   padding-top: 8px;
 }
 .share-button:HOVER{
-  color: black;
+  color: var(--colortext);
 }
 
 .userprofile-body {
