@@ -185,9 +185,9 @@ function Home() {
             <table className="table" style={{marginTop:"20px"}}>
             <thead style={{color:"white"}}>
               <tr>
-                <td>Item Code</td>
-                <td>Scanner</td>
-                <td>Action</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>Item Code</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>Scanner</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>Action</td>
               </tr>
             </thead>
             <tbody style={{color:"white"}}>
