@@ -1,0 +1,13 @@
+https://www.wix.com/website-template/view/html/2257?siteId=47114304-b6c5-449b-8a17-ee258da0ea5c&metaSiteId=ee270690-ee5f-4e6e-ab47-03370e5d0bec&originUrl=https%3A%2F%2Fwww.wix.com%2Fwebsite%2Ftemplates%2Fhtml%2Fblog%2F4&tpClick=view_button
+https://console.cloudinary.com/console/c-af64db62c8d201657968e0e6a03c65/media_library/search
+
+https://blog.logrocket.com/react-scroll-animations-framer-motion/
+tab mui react
+https://mui.com/material-ui/react-snackbar/#customization
+https://mui.com/material-ui/transitions/
+https://mui.com/material-ui/react-app-bar/
+
+https://dev.to/dawnind/persist-redux-state-with-redux-persist-3k0d
+https://blog.bitsrc.io/5-methods-to-persisting-state-between-page-reloads-in-react-8fc9abd3fa2f
+
+Mockapi: agl19932003@gmail.com
