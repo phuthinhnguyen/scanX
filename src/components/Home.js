@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getPost, getallusersforposts, increment,deleteItem } from "../redux/action";
+import { getPost, getallusersforposts, increment, deleteItem } from "../redux/action";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "./Header";
@@ -47,6 +47,9 @@ function Home() {
   function deleteitem(id) {
     dispatch(deleteItem(id));
   }
+  function edititem(item) {
+    navigate("/updateitem", { state: item });
+  }
   return (
     <div>
       {state.user != null ? (
@@ -63,7 +66,7 @@ function Home() {
                 value={sharethinking}
               />
               <Link
-                to="/addnewpost"
+                to="/addnewitem"
                 state={sharethinking}
                 className="button-login share-button"
               >
@@ -167,11 +170,23 @@ function Home() {
                 }
               />
             ))} */}
-            <table className="table table-striped table-hover">
-            <tbody>
+            <table className="table" style={{marginTop:"20px"}}>
+            <thead style={{color:"white"}}>
+              <tr>
+                <td>Item Code</td>
+                <td>Item Name</td>
+                <td>Action</td>
+              </tr>
+            </thead>
+            <tbody style={{color:"white"}}>
                 {sortedposts.map((item)=><tr key={item.id} >
+                  <td>
+                    {item.itemcode} 
+                  </td>
+                  <td>
+                    {item.itemname} 
+                  </td>
                     <td>
-                        {item.itemname}
                         {/* <div style=
                             {{
                                 position:"absolute",
@@ -181,9 +196,15 @@ function Home() {
                             }} > */}
                         <button 
                             style={{padding: "3px 10px"}}
-                            onClick={(e)=>deleteitem(item.id)} className="ms-1 btn btn-danger">
-                            Xóa
+                            onClick={(e)=>edititem(item)} className="ms-1 btn btn-info">
+                            Edit
                         </button>
+                        <button 
+                            style={{padding: "3px 10px"}}
+                            onClick={(e)=>deleteitem(item.id)} className="ms-1 btn btn-danger">
+                            Delete
+                        </button>
+                        
                         {/* </div> */}
                     </td>
                 </tr>)}

@@ -13,6 +13,8 @@ export const TO_ADMIN_SUCCESS = "TO_ADMIN_SUCCESS";
 export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS"
 export const UPLOAD_AVATAR_SUCCESS = "UPLOAD_AVATAR_SUCCESS"
 export const DELETE_ITEM_SUCCESS = "DELETE_ITEM_SUCCESS";
+export const UPDATE_ITEM_SUCCESS = "UPDATE_ITEM_SUCCESS";
+export const ADD_NEW_ITEM_SUCCESS = "ADD_NEW_ITEM_SUCCESS";
 
 // user 2 api, first one includes information about users (id,username,password,avatar,coverphoto...)
 // last one includes information about posts (id,title,body,author...) 
@@ -271,4 +273,33 @@ export const deleteItem= (id) => {
   };
 };
 
+export const editItem = (form) => {
+  return async (dispatch) => {
+    const response = await axios.put(`${apiurlblogs}/${form.id}`, {
+      itemname: form.itemname,
+      itemcode: form.itemcode,
+      createdAt: Date.now()
+    });
+    dispatch({
+      type: UPDATE_ITEM_SUCCESS,
+      payload: response.data
+    });
+  };
+};
+
+export const addnewitem = (form, user) => {
+  return async (dispatch) => {
+    const response = await axios.post(`${apiurlblogs}`, {
+      createdAt: Date.now(),
+      // userId: user.id,
+      itemcode: form.itemcode,
+      itemname: form.itemname,
+    
+    });
+    dispatch({
+      type: ADD_NEW_ITEM_SUCCESS,
+      payload: response.data
+    });
+  };
+};
 

@@ -90,7 +90,7 @@ function Userprofile() {
                 value={sharethinking}
               />
               <Link
-                to="/addnewpost"
+                to="/addnewitem"
                 state={sharethinking}
                 className="button-login share-button"
               >
