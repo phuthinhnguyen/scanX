@@ -278,8 +278,11 @@ export const editItem = (form) => {
     const response = await axios.put(`${apiurlblogs}/${form.id}`, {
       scanner: form.scanner,
       itemcode: form.itemcode,
+      qrcode: form.qrcode,
+      status: form.status,
       createdAt: Date.now()
     });
+    console.log(form.status)
     dispatch({
       type: UPDATE_ITEM_SUCCESS,
       payload: response.data

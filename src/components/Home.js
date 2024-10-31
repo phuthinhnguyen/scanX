@@ -186,7 +186,10 @@ function Home() {
             <thead style={{color:"white"}}>
               <tr>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>Item Code</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>QR Code</td>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>Scanner</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>Created At</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>Status</td>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>Action</td>
               </tr>
             </thead>
@@ -196,7 +199,16 @@ function Home() {
                     {item.itemcode} 
                   </td>
                   <td>
+                    {item.qrcode} 
+                  </td>
+                  <td>
                     {item.scanner} 
+                  </td>
+                  <td>
+                    {item.createdAt} 
+                  </td>
+                  <td>
+                    {item.status} 
                   </td>
                     <td>
                         {/* <div style=

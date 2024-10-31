@@ -72,11 +72,24 @@ function Updateitem() {
                 onChange={(e) => setForm({ ...form, itemcode: e.target.value })}
                 value={form.itemcode}
               ></input>
+              <h6>QR Code</h6>
+              <input
+                onChange={(e) => setForm({ ...form, qrcode: e.target.value })}
+                value={form.qrcode}
+              ></input>
               <h6>Scanner</h6>
               <input
                 disabled style={{color:"white"}}
                 value={user.name}
               ></input>
+              <h6>Status</h6>
+              <select
+                onChange={(e) => setForm({ ...form, status: e.target.value })}
+                value={form.status}
+              >
+                <option value="IN">IN</option>
+                <option value="OUT">OUT</option>
+              </select>
               <br></br>
               <div className="button-wrap">
                 <button type="submit" className="button-login">

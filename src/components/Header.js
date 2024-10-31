@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import {useState} from 'react';
 import {LOGOUT_SUCCESS, getPost, getUserprofile} from "../redux/action";
 import React from "react";
 import Box from "@mui/material/Box";
@@ -14,7 +15,7 @@ function Header(props) {
   const state = useSelector((state) => state);
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const [status, setStatus] = useState("out");
   function logoutclick() {
     dispatch({
       type: LOGOUT_SUCCESS
@@ -40,6 +41,14 @@ function Header(props) {
   return (
     <div className="header">
       <h2 className="logotext">scanX</h2>
+      <div className="header-link-wrap">
+       <label className="inoutlabel labelout">OUT</label>
+      <label className="switch">
+        <input type="checkbox" onChange={(e)=>setStatus({status : "in" ? "out" : "in"})}></input>
+        <span className="slider round"></span>
+      </label>
+      <label className="inoutlabel labelin">IN</label>
+      </div>
       <div className="header-link-wrap">
         <Link to="/home" className="header-link" onClick={() => homeclick()}>
           Home
