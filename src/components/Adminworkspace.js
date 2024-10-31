@@ -140,7 +140,7 @@ function Adminworkspace() {
                       value="qrcode"
                       checked
                     />
-                    <label class="form-check-label">QR Code</label>
+                    <label className="form-check-label">QR Code</label>
                   </div>
                   <div className="form-check">
                     <input
@@ -153,7 +153,7 @@ function Adminworkspace() {
                     />
                     <label className="form-check-label">Status</label>
                   </div>
-                  <div class="form-check">
+                  <div className="form-check">
                     <input
                       className="form-check-input"
                       type="radio"
