@@ -84,6 +84,7 @@ function Updateitem() {
               ></input>
               <h6>Status</h6>
               <select
+                className="statusselect"
                 onChange={(e) => setForm({ ...form, status: e.target.value })}
                 value={form.status}
               >

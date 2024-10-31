@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPost, getallusersforposts, increment, deleteItem, addnewItem } from "../redux/action";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { convertCreatedAt } from "./convertCreatedAt";
 import Header from "./Header";
 import { convertTime } from "./convertTime";
 import Post from "./Post";
@@ -214,7 +215,7 @@ function Scan() {
                     {item.scanner} 
                   </td>
                   <td>
-                    {item.createdAt} 
+                    {convertCreatedAt(item.createdAt)} 
                   </td>
                   <td>
                     {item.status} 

@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import {banuser, deletepost, getallusers, increment, toadmin} from "../redux/action";
+import {banuser, deletepost, getallusers, increment, toadmin, deleteItem} from "../redux/action";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import { convertTime } from "./convertTime";
+import { convertCreatedAt } from "./convertCreatedAt";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -24,7 +25,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 function Adminworkspace() {
-  const [searchradio, setSearchradio] = useState("title");
+  const [searchradio, setSearchradio] = useState("qrcode");
   const [searchtext, setSearchtext] = useState("");
   const [tabvalue, setTabvalue] = useState(0);
   const [open, setOpen] = useState(false);
@@ -41,10 +42,10 @@ function Adminworkspace() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const state = useSelector((state) => state);
-
   const sortedposts = state.posts.sort((a, b) => b.createdAt - a.createdAt);
+
   const filterresult = sortedposts.filter((item) => {
-    return item[searchradio.toLowerCase()].includes(searchtext);
+    return item[searchradio].includes(searchtext);
   });
 
   function getavatarforpost(id){
@@ -99,7 +100,12 @@ function Adminworkspace() {
   function gotouserprofile(userId) {
     navigate("/userprofileonline", { state: userId });
   }
-  
+  function deleteitem(id) {
+    dispatch(deleteItem(id));
+  }
+  function edititem(item) {
+    navigate("/updateitem", { state: item });
+  }
   return (
     <div>
       {state.user != null && state.user.role=="admin" ? (
@@ -107,7 +113,7 @@ function Adminworkspace() {
           <Header />
           <div className="adminworkspace-wrap">
             <div className="adminworkspace-posts">
-              <h2>All posts of users</h2>
+              <h2>Item List</h2>
               <div className="input-search-wrap">
                 <div className="input-group mb-2">
                   <div className="input-group-prepend">
@@ -131,10 +137,10 @@ function Adminworkspace() {
                       name="flexRadioDefault"
                       id="flexRadioDefault1"
                       onChange={onChangeradio}
-                      value="title"
+                      value="qrcode"
                       checked
                     />
-                    <label class="form-check-label">Title</label>
+                    <label class="form-check-label">QR Code</label>
                   </div>
                   <div className="form-check">
                     <input
@@ -143,9 +149,9 @@ function Adminworkspace() {
                       name="flexRadioDefault"
                       id="flexRadioDefault2"
                       onChange={onChangeradio}
-                      value="body"
+                      value="status"
                     />
-                    <label className="form-check-label">Body</label>
+                    <label className="form-check-label">Status</label>
                   </div>
                   <div class="form-check">
                     <input
@@ -154,155 +160,82 @@ function Adminworkspace() {
                       name="flexRadioDefault"
                       id="flexRadioDefault3"
                       onChange={onChangeradio}
-                      value="author"
+                      value="scanner"
                     />
-                    <label className="form-check-label">Author</label>
+                    <label className="form-check-label">Scanner</label>
                   </div>
                 </div>
               </div>
-              <div className="adminworkspace-posts-showsearch">
-                {filterresult.map((item, index) => (
-                  <Post
-                    item={
-                      <div className="adminworkspace-posts-wrap">
-                        <div className="home-body-item" key={index}>
-                          <div className="home-body-item-head">
-                            <div className="home-body-item-avatar">
-                              <img
-                                src={getavatarforpost(item.userId)}
-                                alt="Image link not found"
-                                className="avatar"
-                                onClick={() => gotouserprofile(item.userId)}
-                              ></img>
-                            </div>
-                            <h5
-                              style={{ fontSize: 16, color: "lightgray" }}
-                              onClick={() => gotouserprofile(item.userId)}
-                            >
-                              {item.name}
-                            </h5>
-                          </div>
-                          <div className="home-body-item-post">
-                            <h3 style={{ fontSize: 24, marginTop: 0 }}>
-                              {item.title}
-                            </h3>
-                            <p style={{ fontStyle: "italic", marginTop: 15 }}>
-                              {item.body}
-                            </p>
-                            <div>
-                              <Link
-                                to="/viewpost"
-                                state={item}
-                                onClick={() => {
-                                  reactionclick("view", item.id, item.view);
-                                }}
-                              >
-                                View Post
-                              </Link>
-                              <a style={{ marginLeft: 10 }}> by </a>
-                              <a style={{ fontWeight: 500 }}>{item.author}</a>
-                              <a
-                                style={{
-                                  marginLeft: 10,
-                                  fontStyle: "italic",
-                                  fontSize: 14
-                                }}
-                              >
-                                {" "}
-                                {convertTime(item.createdAt)}
-                              </a>
-                            </div>
-                            <div className="reaction-wrap">
-                              <a
-                                className="reaction"
-                                onClick={() =>
-                                  reactionclick(
-                                    "thumbsUp",
-                                    item.id,
-                                    item.thumbsUp
-                                  )
-                                }
-                              >
-                                👍 {item.thumbsUp}
-                              </a>
-                              <a
-                                className="reaction"
-                                onClick={() =>
-                                  reactionclick("wow", item.id, item.wow)
-                                }
-                              >
-                                😮 {item.wow}
-                              </a>
-                              <a
-                                className="reaction"
-                                onClick={() =>
-                                  reactionclick("heart", item.id, item.heart)
-                                }
-                              >
-                                ❤️ {item.heart}
-                              </a>
-                              <a
-                                className="reaction"
-                                onClick={() =>
-                                  reactionclick("rocket", item.id, item.rocket)
-                                }
-                              >
-                                🚀 {item.rocket}
-                              </a>
-                              <a
-                                className="reaction"
-                                onClick={() =>
-                                  reactionclick("coffee", item.id, item.coffee)
-                                }
-                              >
-                                ☕ {item.coffee}
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="adminworkspace-posts-action">
-                          <div>
-                            <Link
-                              to="/updatepost"
-                              state={item}
-                              className="button-back"
-                            >
-                              Edit
-                            </Link>
-                          </div>
-                          <div style={{ marginTop: 20 }}>
-                            <button
-                              className="button-back"
-                              onClick={() => deletepostclick(item.id)}
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    }
-                  />
-                ))}
-              </div>
+              <table className="table" style={{marginTop:"50px",marginBottom:"80px"}}>
+            <thead style={{color:"white"}}>
+              <tr>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>Item Code</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>QR Code</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>Scanner</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>Created At</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>Status</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>Action</td>
+              </tr>
+            </thead>
+            <tbody style={{color:"white"}}>
+                {filterresult.map((item, index)=><tr key={index} >
+                  <td>
+                    {item.itemcode} 
+                  </td>
+                  <td>
+                    {item.qrcode} 
+                  </td>
+                  <td>
+                    {item.scanner} 
+                  </td>
+                  <td>
+                    {convertCreatedAt(item.createdAt)} 
+                  </td>
+                  <td>
+                    {item.status} 
+                  </td>
+                    <td>
+                        {/* <div style=
+                            {{
+                                position:"absolute",
+                                right:10,
+                                top: "50%",
+                                transform: "translateY(-50%)",
+                            }} > */}
+                        <button 
+                            style={{padding: "3px 10px"}}
+                            onClick={(e)=>edititem(item)} className="ms-1 btn btn-info">
+                            Edit
+                        </button>
+                        <button 
+                            style={{padding: "3px 10px",marginLeft:"20px"}}
+                            onClick={(e)=>deleteitem(item.id)} className="btn btn-danger">
+                            Delete
+                        </button>
+                        
+                        {/* </div> */}
+                    </td>
+                </tr>)}
+            </tbody>
+        </table>
             </div>
-            <Post
-              item={
+            <div>
                 <div className="adminworkspace-analytics-users">
-                  <h2>All users</h2>
+                  <h2>User List</h2>
                   <div className="adminworkspace-analytics-users-table-wrap">
-                    <table className="table adminworkspace-analytics-users-table">
-                      <thead>
+                    <table className="table" style={{marginTop:"20px"}}>
+                      <thead style={{color:"white"}}>
                         <tr>
-                          <th>UserId</th>
-                          <th>Username</th>
-                          <th>Password</th>
-                          <th>Name</th>
-                          <th>Email</th>
-                          <th>Role</th>
-                          <th>Action</th>
+                          <th style={{fontWeight: "700",fontSize:"18px"}}>UserId</th>
+                          <th style={{fontWeight: "700",fontSize:"18px"}}>Username</th>
+                          <th style={{fontWeight: "700",fontSize:"18px"}}>Password</th>
+                          <th style={{fontWeight: "700",fontSize:"18px"}}>Name</th>
+                          <th style={{fontWeight: "700",fontSize:"18px"}}>Email</th>
+                          <th style={{fontWeight: "700",fontSize:"18px"}}>Role</th>
+                          <th style={{fontWeight: "700",fontSize:"18px"}}>Action</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody style={{color:"white"}}>
                         {state.allusers &&
                           state.allusers.map((item, index) => (
                             <tr key={index}>
@@ -318,18 +251,18 @@ function Adminworkspace() {
                                   item.email !=
                                     "phuthinhnguyen1101@gmail.com" ? (
                                     <button
-                                      className="button-login"
+                                      className="ms-1 btn btn-danger"
                                       onClick={() => banuserclick(item.id)}
                                     >
                                       Ban user
                                     </button>
                                   ) : (
-                                    <button className="button-disabled">
+                                    <button className="button-disabled ms-1 btn btn-secondary disabled">
                                       Ban user
                                     </button>
                                   )
                                 ) : (
-                                  <button className="button-disabled">
+                                  <button className="button-disabled ms-1 btn btn-secondary disabled">
                                     Me
                                   </button>
                                 )}
@@ -339,24 +272,21 @@ function Adminworkspace() {
                                   item.email !=
                                     "phuthinhnguyen1101@gmail.com" ? (
                                     <button
-                                      className="button-login"
-                                      style={{ marginTop: 10 }}
+                                      className="ms-1 btn btn-info"
                                       onClick={() => toadminclick(item.id)}
                                     >
                                       To Admin
                                     </button>
                                   ) : (
                                     <button
-                                      className="button-disabled"
-                                      style={{ marginTop: 10 }}
+                                      className="button-disabled ms-1 btn btn-secondary disabled"
                                     >
                                       To Admin
                                     </button>
                                   )
                                 ) : (
                                   <button
-                                    className="button-disabled"
-                                    style={{ marginTop: 10 }}
+                                    className="button-disabled ms-1 btn btn-secondary disabled"
                                   >
                                     Me
                                   </button>
@@ -368,9 +298,8 @@ function Adminworkspace() {
                     </table>
                   </div>
                 </div>
-              }
-            />
-            <Post
+            </div>
+            {/* <Post
               item={
                 <div className="adminworkspace-analytics-reviews">
                   <h2>Analytic Top Reviews</h2>
@@ -1387,8 +1316,15 @@ function Adminworkspace() {
                   </div>
                 </div>
               }
-            />
+            /> */}
+             <Link
+              className="button-back"  
+              to="/home"
+            >
+              Back
+        </Link>
           </div>
+          
           <Snackbar
             open={open}
             autoHideDuration={4000}

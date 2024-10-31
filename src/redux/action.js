@@ -282,7 +282,6 @@ export const editItem = (form) => {
       status: form.status,
       createdAt: Date.now()
     });
-    console.log(form.status)
     dispatch({
       type: UPDATE_ITEM_SUCCESS,
       payload: response.data
