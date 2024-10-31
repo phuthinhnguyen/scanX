@@ -82,7 +82,7 @@ function Home() {
                 className="button-login share-button"
                 onClick={() => addnewitem(sharethinking,state.user.name)}
               >
-                Scan
+                Add
               </button>
             </div>
             {/* {sortedposts.map((item, index) => (
