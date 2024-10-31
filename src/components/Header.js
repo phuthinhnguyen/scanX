@@ -41,14 +41,14 @@ function Header(props) {
   return (
     <div className="header">
       <h2 className="logotext">scanX</h2>
-      <div className="header-link-wrap">
+      {/* <div className="header-link-wrap">
        <label className="inoutlabel labelout">OUT</label>
       <label className="switch">
         <input type="checkbox" onChange={(e)=>setStatus({status : "in" ? "out" : "in"})}></input>
         <span className="slider round"></span>
       </label>
       <label className="inoutlabel labelin">IN</label>
-      </div>
+      </div> */}
       <div className="header-link-wrap">
         <Link to="/home" className="header-link" onClick={() => homeclick()}>
           Home

@@ -290,14 +290,15 @@ export const editItem = (form) => {
   };
 };
 
-export const addnewItem = (itemcode,scanner) => {
+export const addnewItem = (itemcode,qrcode,scanner,status) => {
   return async (dispatch) => {
     const response = await axios.post(`${apiurlblogs}`, {
       createdAt: Date.now(),
       // userId: user.id,
-      itemcode: itemcode,
-      scanner: scanner,
-    
+      itemcode:itemcode,
+      qrcode: qrcode,
+      scanner: scanner, 
+      status:status
     });
     dispatch({
       type: ADD_NEW_ITEM_SUCCESS,

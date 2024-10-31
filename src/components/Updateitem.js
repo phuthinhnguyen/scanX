@@ -31,7 +31,7 @@ function Updateitem() {
       navigate("/");
     }
     if (state==null){
-      navigate("/home");
+      navigate("/home");  
     }
   }, []);
   function submitform(e) {
@@ -54,7 +54,7 @@ function Updateitem() {
 
   return (
     <>
-      {state!=null ? (
+      {state!=null ? (  
         <div>
           <Header />
           <div className="addnewpost-body">

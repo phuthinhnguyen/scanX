@@ -433,21 +433,27 @@ form {
 
 .share-thinking {
   display: flex;
-  width: 70%;
-  margin: auto;
+  /* width: 70%; */
+  width: 100%;
+  /* margin: auto; */
+  justify-content: center ;
+  align-items: center   ;
+  margin-bottom: -20px;
 }
 
 .share-button {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  margin-left: -10px;
+  /* margin-left: -10px;  */
+  margin-left: -2px; 
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   font-family: var(--fonttext);
   text-decoration: none;
   color: var(--colortext);
   text-align: center;
-  padding-top: 8px;
+  padding-top: 10px;
+  padding-bottom: 8px;
 }
 .share-button:HOVER{
   color: var(--colortext);
@@ -863,4 +869,61 @@ input:checked + .slider:before {
   border-radius: 10px;
   padding-left: 20px;
   padding-right: 20px;
+}
+.hombody-in-out{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around    ;
+  align-items: center;
+} 
+.hombody-in{
+  background-color: #10e96a;
+  border-radius: 10px;
+  width: 500px;
+  height: 500px;
+  font-size: 100px;
+  font-weight: 600;
+  color: var(--colortext);
+}
+.hombody-in:hover{
+  background-color: #10ff73;
+}
+.hombody-out{
+  background-color:#e2372b;
+  border-radius: 10px;
+  width: 500px;
+  height: 500px;
+  font-size: 100px;
+  font-weight: 600;
+  color: var(--colortext);
+}
+.hombody-out:hover{
+  background-color:#fc3c2f;
+}
+.statuslabelin{
+  background-color: #10e96a;
+  border-radius: 10px;
+  width: 100px;
+  height: 100px;
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--colortext);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.statuslabelout{
+  background-color: #e2372b;
+  border-radius: 10px;
+  width: 100px;
+  height: 100px;
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--colortext);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home-body-wrap{
+  display: flex   ;
 }

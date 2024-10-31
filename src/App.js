@@ -10,6 +10,7 @@ import Loadinglogin from "./components/Loadinglogin";
 import Loadingpath from "./components/Loadingpath";
 import Updateitem from "./components/Updateitem";
 import Addnewitem from "./components/Addnewitem";
+import Scan from "./components/Scan";
 
 // use lazy for every loading path
 const Home = React.lazy(() => import("./components/Home"));
@@ -105,6 +106,14 @@ function App() {
               element={
                 <Suspense fallback={<Loadingpath/>}>
                   <Addnewitem />
+                </Suspense>
+              }
+            />
+             <Route
+              path="/scan"
+              element={
+                <Suspense fallback={<Loadingpath/>}>
+                  <Scan />
                 </Suspense>
               }
             />
