@@ -15,7 +15,7 @@ function Header(props) {
   const state = useSelector((state) => state);
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [status, setStatus] = useState("out");
+ 
   function logoutclick() {
     dispatch({
       type: LOGOUT_SUCCESS

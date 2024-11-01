@@ -87,14 +87,28 @@ function Scan() {
         return item["qrcode"].includes(qrcode);
       });
       if (filterresult.length>0){
-        setAlert({open:true, message:"QR code already exists"})
+        if (state=="IN"){
+          setAlert({open:true, message:"QR code already exists in database"})
+        }
+        else if (state=="OUT"){
+          const qrcodesplit = qrcode.split("/")
+          const itemcode = qrcodesplit[5]
+          setScanitem([...scanitem,{itemcode:itemcode,qrcode:qrcode,status:state,createat:Date.now(),scanner:scanner}])
+          dispatch(addnewItem(itemcode,qrcode,scanner,state));
+          setSharethinking("")
+        }
       }
       else{
-        const qrcodesplit = qrcode.split("/")
-        const itemcode = qrcodesplit[5]
-        setScanitem([...scanitem,{itemcode:itemcode,qrcode:qrcode,status:state,createat:Date.now(),scanner:scanner}])
-        dispatch(addnewItem(itemcode,qrcode,scanner,state));
-        setSharethinking("")
+        if (state=="IN"){
+          const qrcodesplit = qrcode.split("/")
+          const itemcode = qrcodesplit[5]
+          setScanitem([...scanitem,{itemcode:itemcode,qrcode:qrcode,status:state,createat:Date.now(),scanner:scanner}])
+          dispatch(addnewItem(itemcode,qrcode,scanner,state));
+          setSharethinking("")
+        }
+        else if (state=="OUT"){
+          setAlert({open:true, message:"QR Code not exists in database"})
+        }
       }
     }
   }

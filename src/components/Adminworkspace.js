@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import {banuser, deletepost, getallusers, increment, toadmin, deleteItem} from "../redux/action";
 import React, { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import { convertTime } from "./convertTime";
@@ -16,6 +17,7 @@ import Post from "./Post";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Slide from "@mui/material/Slide";
+import Pagination from "./Pagination";
 
 function SlideTransition(props) {
   return <Slide {...props} direction="up" />;
@@ -23,7 +25,7 @@ function SlideTransition(props) {
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-
+let PageSize = 5;
 function Adminworkspace() {
   const [searchradio, setSearchradio] = useState("qrcode");
   const [searchtext, setSearchtext] = useState("");
@@ -42,11 +44,22 @@ function Adminworkspace() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const state = useSelector((state) => state);
-  const sortedposts = state.posts.sort((a, b) => b.createdAt - a.createdAt);
-
+  const sortedposts = state.posts.sort((a, b) => b.createdAt - a.createdAt); 
+  const [currentPage, setCurrentPage] = useState(1);  
   const filterresult = sortedposts.filter((item) => {
-    return item[searchradio].toLowerCase().includes(searchtext.toLowerCase());
+    if (searchradio=="qrcode" || searchradio=="status" | searchradio=="scanner"){
+      return item[searchradio].toLowerCase().includes(searchtext.toLowerCase());
+    }
+    else if (searchradio=="partnumber"){ 
+      const itemsqrcodesplit = item["qrcode"].split("/")
+      return itemsqrcodesplit[4].toLowerCase().includes(searchtext.toLowerCase());
+    }
   });
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return sortedposts.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage]); 
 
   function getavatarforpost(id){
     if (state.allusers != null) {
@@ -164,6 +177,17 @@ function Adminworkspace() {
                     />
                     <label className="form-check-label">Scanner</label>
                   </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault3"
+                      onChange={onChangeradio}
+                      value="partnumber"
+                    />
+                    <label className="form-check-label">Part Number</label>
+                  </div>
                 </div>
               </div>
               <table className="table" style={{marginTop:"50px",marginBottom:"80px"}}>
@@ -175,7 +199,7 @@ function Adminworkspace() {
                 <td style={{fontWeight: "700",fontSize:"18px"}}>MFG Date</td>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>Size</td>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>Quantity</td>
-                <td style={{fontWeight: "700",fontSize:"18px"}}>PartNumber</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>Part Number</td>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>Scanner</td>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>Created At</td>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>Status</td>
@@ -238,6 +262,13 @@ function Adminworkspace() {
                 </tr>)}
             </tbody>
         </table>
+        {/* <Pagination
+        className="pagination-bar"
+        currentPage={currentPage}
+        totalCount={sortedposts.length}
+        pageSize={PageSize}   
+        onPageChange={page => setCurrentPage(page)}
+      /> */}
             </div>
             <div>
                 <div className="adminworkspace-analytics-users">
