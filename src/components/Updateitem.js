@@ -20,8 +20,8 @@ function Updateitem() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const stateselector = useSelector((state) => state)
   const name = user.name;
-  console.log(name)
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   // const [form, setForm] = useState(state);
@@ -34,9 +34,13 @@ function Updateitem() {
       navigate("/home");  
     }
   }, []);
+  const sortedposts = stateselector.posts.sort((a, b) => b.createdAt - a.createdAt);
   function submitform(e) {
     e.preventDefault();
-    dispatch(editItem(form));
+    const filterqrcode = sortedposts.filter(item=>{
+      return item["qrcode"].toLowerCase().includes(form.qrcode.toLowerCase())
+    })
+    dispatch(editItem(form, filterqrcode[0].id));
     setMessage("Your Item has been updated successfully");
     setOpen(true);
   }
@@ -63,10 +67,10 @@ function Updateitem() {
               className="addnewpost-body-form"
               onSubmit={(e) => submitform(e)}
             >
-              <h6>Item ID</h6>
+              {/* <h6>Item ID</h6>
               <input
                 value={form.id} disabled style={{color:"white"}}
-              ></input>
+              ></input> */}
               <h6>Item Code</h6>
               <input
                 onChange={(e) => setForm({ ...form, itemcode: e.target.value })}

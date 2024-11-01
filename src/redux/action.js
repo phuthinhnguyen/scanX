@@ -273,9 +273,9 @@ export const deleteItem= (id) => {
   };
 };
 
-export const editItem = (form) => {
+export const editItem = (form,id) => {
   return async (dispatch) => {
-    const response = await axios.put(`${apiurlblogs}/${form.id}`, {
+    const response = await axios.put(`${apiurlblogs}/${id}`, {
       scanner: form.scanner,
       itemcode: form.itemcode,
       qrcode: form.qrcode,

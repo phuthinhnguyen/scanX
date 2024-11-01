@@ -43,7 +43,7 @@ function Scan() {
     navigate("/")
   }
   const [sharethinking, setSharethinking] = useState("");
-
+  const [scanitem, setScanitem] = useState([])
   useEffect(() => {
     dispatch(getPost());
     dispatch(getallusersforposts());
@@ -52,7 +52,6 @@ function Scan() {
   const sharethinkingonChange = (e) => {
     setSharethinking(e.target.value);
   };
- 
   const sortedposts = stateselector.posts.sort((a, b) => b.createdAt - a.createdAt);
 
   function reactionclick(emojiname, id, currentcount) {
@@ -71,8 +70,13 @@ function Scan() {
       return allusersfilter[0].avatar
     }
   }
-  function deleteitem(id) {
-    dispatch(deleteItem(id));
+  function deleteitem(qrcode) {
+    const filterqrcode = sortedposts.filter(item => {
+      return item["qrcode"].toLowerCase().includes(qrcode.toLowerCase());
+    })
+    const filternotqrcode = scanitem.filter(item=>item.qrcode!=qrcode)
+    setScanitem(filternotqrcode)
+    dispatch(deleteItem(filterqrcode[0].id));
   }
   function edititem(item) {
     navigate("/updateitem", { state: item });
@@ -88,6 +92,7 @@ function Scan() {
       else{
         const qrcodesplit = qrcode.split("/")
         const itemcode = qrcodesplit[5]
+        setScanitem([...scanitem,{itemcode:itemcode,qrcode:qrcode,status:state,createat:Date.now(),scanner:scanner}])
         dispatch(addnewItem(itemcode,qrcode,scanner,state));
         setSharethinking("")
       }
@@ -120,7 +125,7 @@ function Scan() {
                   </Link> */}
                   <button
                     className="button-login share-button"
-                    onClick={() => addnewitem(sharethinking,stateselector.user.name)}
+                    onClick={() => addnewitem(sharethinking.trim(),stateselector.user.name)}
                   >
                     Add
                   </button>
@@ -236,7 +241,7 @@ function Scan() {
               </tr>
             </thead>
             <tbody style={{color:"white"}}>
-                {sortedposts.map((item)=><tr key={item.id} >
+                {scanitem.map((item)=><tr key={item.id} >
                   <td>
                     {item.itemcode} 
                   </td>
@@ -247,7 +252,7 @@ function Scan() {
                     {item.scanner} 
                   </td>
                   <td>
-                    {convertCreatedAt(item.createdAt)} 
+                    {convertCreatedAt(item.createat)} 
                   </td>
                   <td>
                     {item.status} 
@@ -267,7 +272,7 @@ function Scan() {
                         </button>
                         <button 
                             style={{padding: "3px 10px",marginLeft:"20px"}}
-                            onClick={(e)=>deleteitem(item.id)} className="btn btn-danger">
+                            onClick={(e)=>deleteitem(item.qrcode)} className="btn btn-danger">
                             Delete
                         </button>
                         
@@ -275,6 +280,7 @@ function Scan() {
                     </td>
                 </tr>)}
             </tbody>
+          
         </table>
         <Link
               className="button-back"  
