@@ -45,7 +45,7 @@ function Adminworkspace() {
   const sortedposts = state.posts.sort((a, b) => b.createdAt - a.createdAt);
 
   const filterresult = sortedposts.filter((item) => {
-    return item[searchradio].includes(searchtext);
+    return item[searchradio].toLowerCase().includes(searchtext.toLowerCase());
   });
 
   function getavatarforpost(id){
@@ -138,7 +138,7 @@ function Adminworkspace() {
                       id="flexRadioDefault1"
                       onChange={onChangeradio}
                       value="qrcode"
-                      checked
+                      // checked
                     />
                     <label className="form-check-label">QR Code</label>
                   </div>
@@ -171,6 +171,11 @@ function Adminworkspace() {
               <tr>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>Item Code</td>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>QR Code</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>PO</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>MFG Date</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>Size</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>Quantity</td>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>PartNumber</td>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>Scanner</td>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>Created At</td>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>Status</td>
@@ -184,6 +189,21 @@ function Adminworkspace() {
                   </td>
                   <td>
                     {item.qrcode} 
+                  </td>
+                  <td>
+                    {item.qrcode.split("/")[0]} 
+                  </td>
+                  <td>
+                    {item.qrcode.split("/")[1]} 
+                  </td>
+                  <td>
+                    {item.qrcode.split("/")[2]} 
+                  </td>
+                  <td>
+                    {item.qrcode.split("/")[3]} 
+                  </td>
+                  <td>
+                    {item.qrcode.split("/")[4]} 
                   </td>
                   <td>
                     {item.scanner} 

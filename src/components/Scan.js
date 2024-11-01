@@ -1,19 +1,43 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getPost, getallusersforposts, increment, deleteItem, addnewItem } from "../redux/action";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { convertCreatedAt } from "./convertCreatedAt";
 import Header from "./Header";
 import { convertTime } from "./convertTime";
 import Post from "./Post";
+import Slide from "@mui/material/Slide";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
+
+// used for show snackbar and alert
+function SlideTransition(props) {
+  return <Slide {...props} direction="up" />;
+}
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+const alrertstylesuccess = {
+  width: "100%",
+  marginBottom: 4,
+  marginRight: 2,
+  backgroundColor: "var(--backgroundbody)"
+};
 
 function Scan() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { state } = useLocation();
-
+  const [alert, setAlert] = useState({ open: false, message: "" });
   const stateselector = useSelector((state) => state);
+  const closealert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setAlert({ ...alert, open: false });
+  };
 
   if (stateselector.user == null) {
     navigate("/")
@@ -55,10 +79,18 @@ function Scan() {
   }
   function addnewitem(qrcode,scanner) {
     if (qrcode!=""){
-      const qrcodesplit = qrcode.split("/")
-      const itemcode = qrcodesplit[5]
-      dispatch(addnewItem(itemcode,qrcode,scanner,state));
-      setSharethinking("")
+      const filterresult = sortedposts.filter((item) => {
+        return item["qrcode"].includes(qrcode);
+      });
+      if (filterresult.length>0){
+        setAlert({open:true, message:"QR code already exists"})
+      }
+      else{
+        const qrcodesplit = qrcode.split("/")
+        const itemcode = qrcodesplit[5]
+        dispatch(addnewItem(itemcode,qrcode,scanner,state));
+        setSharethinking("")
+      }
     }
   }
   return (
@@ -230,7 +262,7 @@ function Scan() {
                             }} > */}
                         <button 
                             style={{padding: "3px 10px"}}
-                            onClick={(e)=>edititem(item)} className="ms-1 btn btn-info">
+                            onClick={(e)=>edititem(item)} className={stateselector.user.role=="admin" ? "ms-1 btn btn-info" : "ms-1 btn btn-secondary disabled"}>
                             Edit
                         </button>
                         <button 
@@ -251,7 +283,27 @@ function Scan() {
               Back
         </Link>
         </div>
-
+        <Snackbar
+        open={alert.open}
+        autoHideDuration={2000}
+        onClose={closealert}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        TransitionComponent={SlideTransition}
+      >
+        <Alert
+          onClose={closealert}
+          severity={
+            alert.message.includes("successfully") ? "success" : "error"
+          }
+          sx={
+            alert.message.includes("successfully")
+              ? { ...alrertstylesuccess, color: "var(--success)" }
+              : { ...alrertstylesuccess, color: "var(--error)" }
+          }
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>                
         </div>
       ) : (
         null
