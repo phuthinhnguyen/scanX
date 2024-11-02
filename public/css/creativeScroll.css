@@ -26,13 +26,14 @@ html {
 
 :root {
 	--index: calc(1vw + 1vh);
-	--color-header: #f4efec;
-	/* --color-text: #cdc6c3; */
+	--color-header: white;
+	--color-text: black;
 	--gallery-gap: calc(var(--index) * 7.5);
-	/* --boldyellow: rgb(245, 204, 25); */
-	--boldyellow: rgb(24, 8, 172);
-	--color-text: white;
-	--buttonhover: rgb(14, 18, 231);
+	--boldyellow: rgb(245, 204, 25);
+	/* --boldyellow: rgb(24, 8, 172); */
+	/* --color-text: white; */
+	/* --buttonhover: rgb(14, 18, 231); */
+	--buttonhover: yellow;
 }
 
 #signup {
@@ -165,4 +166,5 @@ body {
 
 .text-block__p {
 	line-height: 1.75;
+	color: var(--color-header);
 }

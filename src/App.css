@@ -31,12 +31,14 @@ html {
 
 
 :root {
-  /* --boldyellow: rgb(245, 204, 25); */
-  --boldyellow: rgb(24, 8, 172);
+  --boldyellow: rgb(245, 204, 25);
+  /* --boldyellow: rgb(24, 8, 172); */
   --backgroundhead: black;
-  --colortext: white;
-  /* --buttonhover: yellow; */
-  --buttonhover: rgb(14, 18, 231);
+  /* --colortext: white; */
+  --colortext: black;
+  --colorlogo: white;
+  --buttonhover: yellow;  
+  /* --buttonhover: rgb(14, 18, 231); */
   --menuitemhover: rgb(232, 200, 25);
   --backgroundbody: rgb(24, 24, 24);
   --fonttext: outfit-c;
@@ -69,7 +71,8 @@ html {
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  /* color: white; */
+  /* color: black; */
 }
 
 .App-link {
@@ -99,6 +102,7 @@ html {
   text-decoration-color: var(--boldyellow);
   text-decoration-style: wavy; */
   /* margin-top: -20px; */
+  color: var(--colorlogo);
 }
 
 .header-form {
@@ -137,7 +141,7 @@ html {
   font-size: 18px;
   margin-right: 20px;
   padding: 0 20px;
-  height: 32px;
+  height: 35px;
   border-radius: 20px;
   background-color: var(--boldyellow);
   display: flex;
@@ -166,13 +170,13 @@ html {
 
 .usermenu:hover {
   color: var(--colortext);
-  background-color: var(--buttonhover);
+  background-color: var(--boldyellow);
 }
 
 
 /* css element of form */
 label {
-  color: var(--colortext);
+  color: var(--colorlogo);
   font-family: var(--fonttext);
   font-size: 18px;
   line-height: 40px;
@@ -243,7 +247,6 @@ form {
   border: none;
   display: block;
   color: var(--colortext);
-  font-weight: 500;
 }
 
 .button-signup:hover {
@@ -331,7 +334,7 @@ form {
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  color: black;
+  /* color: white; */
   column-gap: 20px;
 }
 
@@ -647,8 +650,8 @@ form {
 
 
 .adminworkspace-analytics-users {
-  margin-top: 80px;
-  padding: 50px;
+  /* margin-top: 80px; */
+  padding: 20px;
 }
 
 .adminworkspace-analytics-users h2 {
@@ -1003,4 +1006,101 @@ input:checked + .slider:before {
 .pagination-container .pagination-item.disabled:hover {
   background-color: transparent;
   cursor: default;
+}
+
+
+.filters-container {
+  /* background-color: black; */
+  margin: auto;
+  /* margin-top: 40px; */
+  /* padding: 30px 200px; */
+  /* height: 800px; */
+  width: 100%;
+}
+.filters-container .filters-wrap {
+  list-style-type: none;
+  position: relative;
+  width: 40%;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 10px 30px 0px rgba(153, 153, 153, 0.2);
+  display: table;
+  text-align: center;
+  overflow: hidden;
+  /* margin: 0; */
+  margin: auto;
+  padding: 0;
+}
+.filters-container .filters-wrap .active {
+  color: #fff;
+  /* background: #f42f2c; */
+  background: var(--boldyellow);
+}
+.filters-container .filters-wrap li {
+  display: table-cell;
+  padding: 20px 0px;
+  max-width: 184px;
+  cursor: pointer;
+  position: relative;
+  font-size: 20px;
+  font-weight: 500;
+  color: black;
+ 
+}
+.filters-container .filters-content {
+  text-align: left;
+  /* color: #777; */
+  /* font-family: "Poppins", sans-serif; */
+  margin-top: 50px;
+  height: 100%;
+  min-height: 700px;
+}
+.filters-container .filters-content .row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+  position: relative;
+  /* height: 600px; */
+  height: 100%;
+  min-height: 700px;
+}
+.filters-container .filters-content .row .all {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  flex: 0 0 50%;
+  max-width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+
+}
+.filters-container .filters-content .row .all .single-menu {
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  margin-top: 20px;
+}
+.filters-container .filters-content .row .all .single-menu .title-wrap {
+  display: flex !important;
+  justify-content: space-between !important;
+  margin-bottom: 20px;
+}
+.filters-container .filters-content .row .all .single-menu .title-wrap h4 {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.2em !important;
+}
+.filters-container .filters-content .row .all .single-menu .title-wrap h4:first-of-type {
+  color: #222;
+}
+.filters-container .filters-content .row .all .single-menu .title-wrap h4:last-of-type {
+  color: #f42f2c;
+}
+.filters-container .filters-content .row .all .single-menu p {
+  color: #777;
+  font-size: 14px;
+  font-weight: 300;
+  max-width: 392px;
 }

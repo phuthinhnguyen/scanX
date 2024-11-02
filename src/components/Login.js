@@ -352,8 +352,8 @@ function Login() {
       </Collapse>
 
       <div className="login-body">
-        {/* <iframe src="creativeScroll.html" style={{ width: "100%", height: "100%" }}></iframe> */}
-        <img src="../img/background-3.png" style={{width:"100%",height:"100%"}}></img>
+        <iframe src="creativeScroll.html" style={{ width: "100%", height: "100%" }}></iframe>
+        {/* <img src="../img/background-3.png" style={{width:"100%",height:"100%"}}></img> */}
       </div>    
 
       <Snackbar
