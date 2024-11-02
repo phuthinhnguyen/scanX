@@ -9,6 +9,9 @@ $('.filters li').click(function () {
     if (data==".userlist"){
         $(".userlist").css("display", "block");
     }
+    if (data==".chartview"){
+        $(".chartview").css("display", "block");
+    }
     $grid.isotope({
         filter: data
     })
