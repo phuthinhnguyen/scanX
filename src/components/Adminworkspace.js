@@ -131,6 +131,7 @@ function Adminworkspace() {
               <ul className="filters-wrap filters col-lg-12 no-padding">
                 <li className="active" data-filter=".itemlist">Items List</li>
                 <li data-filter=".userlist" className="">Users List</li>
+                <li data-filter=".chartview" className="">Chart View</li>
               </ul>
               <div className="filters-content">
                 <div className="row grid">
@@ -358,6 +359,14 @@ function Adminworkspace() {
                               ))}
                           </tbody>
                         </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-6 all chartview" style={{position:"absolute",left:"0%", top:"0px"}}>
+                    <div className="adminworkspace-analytics-users">
+                      <h2>Chart View</h2>
+                      <div className="adminworkspace-chartview">
+                            <h4>No Result</h4>
                       </div>
                     </div>
                   </div>
