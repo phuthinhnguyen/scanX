@@ -173,7 +173,8 @@ function Login() {
   return (
     <div>
       <div className="header">
-        <h2 className="logotext">scanX</h2>
+        <img src="../img/logo.png" style={{width:"40px",height:"40px", marginRight:"10px"}}></img>
+        <h2 className="logotext">ScanApp</h2>
         <div className="header-form">
           <form
             onSubmit={(e) => handleSubmitlogin(e, formlogin)}
@@ -351,8 +352,9 @@ function Login() {
       </Collapse>
 
       <div className="login-body">
-        <iframe src="creativeScroll.html" style={{ width: "100%", height: "100%" }}></iframe>
-      </div>
+        {/* <iframe src="creativeScroll.html" style={{ width: "100%", height: "100%" }}></iframe> */}
+        <img src="../img/background-3.png" style={{width:"100%",height:"100%"}}></img>
+      </div>    
 
       <Snackbar
         open={alert.open}

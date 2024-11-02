@@ -3,7 +3,8 @@ function Loadinglogin() {
     return (
         <div className="preloader-wrap">
             <div className="header">
-                <h2 className="logotext">scanX</h2>
+                <img src="../img/logo.png" style={{width:"40px",height:"40px", marginRight:"10px"}}></img>
+                <h2 className="logotext">ScanApp</h2>
                 <div className="header-form">
                     <div>
                         <div
