@@ -129,15 +129,15 @@ function Adminworkspace() {
           <div className="adminworkspace-wrap">
             <div className="filters-container" id="menu">
               <ul className="filters-wrap filters col-lg-12 no-padding">
-                <li className="active" data-filter=".itemlist">Items List</li>
-                <li data-filter=".userlist" className="">Users List</li>
-                <li data-filter=".chartview" className="">Chart View</li>
+                <li className="active" data-filter=".itemlist">PRODUCTS</li>
+                <li data-filter=".userlist" className="">USERS</li>
+                <li data-filter=".chartview" className="">CHART VIEW</li>
               </ul>
               <div className="filters-content">
                 <div className="row grid">
                   <div className="col-md-6 all itemlist" style={{position:"absolute",left:"0%", top:"0px"}}>
                     <div className="adminworkspace-posts">
-                      <h2>Item List</h2>
+                      <h2>PRODUCTS</h2>
                       <div className="input-search-wrap">
                         <div className="input-group mb-2">
                           <div className="input-group-prepend">
@@ -284,7 +284,7 @@ function Adminworkspace() {
                   </div>
                   <div className="col-md-6 all userlist" style={{position:"absolute",left:"0%", top:"0px"}}>
                     <div className="adminworkspace-analytics-users">
-                      <h2>User List</h2>
+                      <h2>USERS</h2>
                       <div className="adminworkspace-analytics-users-table-wrap">
                         <table className="table" style={{marginTop:"20px"}}>
                           <thead style={{color:"white"}}>

@@ -1109,6 +1109,9 @@ input:checked + .slider:before {
   font-weight: 300;
   max-width: 392px;
 }
+/* .chartview{
+  display: none;
+} */
 .adminworkspace-chartview {
   display: flex;
   justify-content: center;
