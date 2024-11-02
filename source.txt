@@ -11,3 +11,5 @@ https://dev.to/dawnind/persist-redux-state-with-redux-persist-3k0d
 https://blog.bitsrc.io/5-methods-to-persisting-state-between-page-reloads-in-react-8fc9abd3fa2f
 
 Mockapi: agl19932002@gmail.com
+Template: https://memos-template-free.webflow.io/#section-waitlist
+Free Database: https://console.aiven.io/account/a4ef4ac530fe/project/scanapp123-phuthinhnguyen/services (gmail account)
