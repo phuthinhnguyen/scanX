@@ -21,6 +21,7 @@ const Login = React.lazy(() => import("./components/Login"));
 const Userprofile = React.lazy(() => import("./components/Userprofile"));
 const Adminworkspace = React.lazy(() => import("./components/Adminworkspace"));
 const Userprofileonline = React.lazy(() => import("./components/Userprofileonline"));
+const Products = React.lazy(() => import("./components/Products"));
 
 function App() {
   let persistor = persistStore(store);
@@ -117,7 +118,16 @@ function App() {
                 </Suspense>
               }
             />
+             <Route
+              path="/products"
+              element={
+                <Suspense fallback={<Loadingpath/>}>
+                  <Products />
+                </Suspense>
+              }
+            />
           </Routes>
+          
         </BrowserRouter>
       </PersistGate>
     </Provider>

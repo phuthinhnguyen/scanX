@@ -247,7 +247,7 @@ function Adminworkspace() {
                                 {convertCreatedAt(item.createdAt)} 
                               </td>
                               <td>
-                                {item.status} 
+                                <div style={item.status=="IN"?{background:"#10e96a", padding:"2px", textAlign:"center", maxWidth:"100px", borderRadius:"10px"}:{background:"#e2372b", padding:"2px", textAlign:"center", maxWidth:"100px", borderRadius:"10px"}}>{item.status} </div>
                               </td>
                                 <td>
                                     {/* <div style=

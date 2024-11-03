@@ -9,6 +9,8 @@ import MenuItem from "@mui/material/MenuItem";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
+import { Helmet } from 'react-helmet';
+import $ from 'jquery'
 
 function Header(props) {
   const dispatch = useDispatch();
@@ -40,12 +42,25 @@ function Header(props) {
  
   return (
     <div className="header">
+      <div id="scrolltop">
+          <img src="../img/totop1.png" alt="" onClick={() => {
+              window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+            }}></img>
+      </div>   
+      <Helmet>
+        <script src="../js/totop.js"></script>
+      </Helmet> 
       <img src="../img/logo.png" style={{width:"40px",height:"40px", marginRight:"10px"}}></img>
       <h2 className="logotext">ScanApp</h2> 
       <div className="header-link-wrap">
         <Link to="/home" className="header-link" onClick={() => homeclick()}>
           Home
         </Link>
+        {state.user.role != "admin" && (
+          <Link to="/products" className="header-link">
+            Products
+          </Link>
+        )}
         {/* <Link to="/addnewpost" className="header-link">
           New Post
         </Link> */}

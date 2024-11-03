@@ -68,12 +68,27 @@ function Home() {
         <div>
           <Header />
           <div className="home-body hombody-in-out">
-          <button className="hombody-in"  onClick={()=>buttonInClick("IN")}>
-            IN
-          </button>
-          <button className="hombody-out" onClick={()=>buttonOutClick("OUT")}> 
-            OUT
-          </button>
+            <span>Scanner:</span>
+            <h3>{state.user.name}</h3>
+            <div className="template1-container">
+              <div className="img" style={{backgroundImage: "url()"}}>
+                <div className="text-content p-4 text-center">
+                    {/* <span>Scanner:</span>
+                    <h3>{state.user.name}</h3> */}
+                  <p>
+                       <button className="hombody-in btn-custom mb-2 p-4 text-center popup-vimeo"  onClick={()=>buttonInClick("IN")}>
+                        SCAN IN
+                        </button>
+                        <button className="hombody-out btn-custom mb-2 p-4 text-center popup-vimeo" onClick={()=>buttonOutClick("OUT")}> 
+                      SCAN OUT
+                      </button>
+                  </p>
+                </div>
+              </div>
+         
+		        </div>
+           
+            
           </div>
         </div>
       ) : (
