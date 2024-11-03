@@ -15,4 +15,5 @@ Template: https://memos-template-free.webflow.io/#section-waitlist
           https://webflow.com/templates/html/torch-saas-website-template
           https://preview.colorlib.com/#suppablog
 Free Database: https://console.aiven.io/account/a4ef4ac530fe/project/scanapp123-phuthinhnguyen/services (gmail account)
+Chart: https://www.scaler.com/topics/react/react-chartjs/
                 
