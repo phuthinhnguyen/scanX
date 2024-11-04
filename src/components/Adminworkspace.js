@@ -10,7 +10,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { a11yProps, TabPanel } from "./TabMui";
-import { gettoppost } from "./Analytic";
+// import { gettoppost } from "./Analytic";
 import { GrOverview } from "react-icons/gr";
 import { BsSearch } from "react-icons/bs";
 import Post from "./Post";
