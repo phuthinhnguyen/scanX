@@ -10,7 +10,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { a11yProps, TabPanel } from "./TabMui";
-import { gettoppost } from "./analytic";
+import { gettoppost } from "./Analytic";
 import { GrOverview } from "react-icons/gr";
 import { BsSearch } from "react-icons/bs";
 import Post from "./Post";
@@ -21,6 +21,10 @@ import Pagination from "./Pagination";
 import { Helmet } from 'react-helmet';
 import $ from 'jquery'
 import { wrap } from "framer-motion";
+import { Pie, Bar } from 'react-chartjs-2'
+import { Chart, registerables } from 'chart.js'
+Chart.register(...registerables)
+
 
 
 function SlideTransition(props) {
@@ -115,8 +119,7 @@ function Adminworkspace() {
     setSearchtext(e.target.value);
     setSearch({...search,[searchradio]:e.target .value})
   };
-  console.log(searchtext)
-  console.log(search)
+
   const closealert = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -133,7 +136,45 @@ function Adminworkspace() {
   function edititem(item) {
     navigate("/updateitem", { state: item });
   }
- 
+  const filterviewchartin = sortedposts.filter(item=>{
+    return item.status == "IN"
+  })
+  const filterviewchartout = sortedposts.filter(item=>{
+    return item.status == "OUT"
+  })
+  const pie = {
+    labels: [
+      'IN',
+      'OUT',
+    ],
+    datasets: [
+      {
+        label: 'IN/OUT IN MONTH',
+        backgroundColor: [
+          'Green',
+          'Red',
+        ],
+        data: [filterviewchartin.length, filterviewchartout.length],
+      },
+    ],
+  }
+  const bar = {
+    labels: [
+      'IN',
+      'OUT',
+      'REMAIN',
+    ],
+    datasets: [
+      {
+        label: 'PRODUCTS',
+        backgroundColor: 'Yellow',
+        borderColor: 'Yellow',
+        borderWidth: 2,
+        data: [filterviewchartin.length, filterviewchartout.length, filterviewchartin.length-filterviewchartout.length],
+      },
+    ],
+  }
+  
   return (
     <div>
       {state.user != null && state.user.role=="admin" ? (
@@ -385,9 +426,47 @@ function Adminworkspace() {
                   </div>
                   <div className="col-md-6 all chartview" style={{position:"absolute",left:"0%", top:"0px"}}>
                     <div className="adminworkspace-analytics-users">
-                      <h2>Chart View</h2>
+                      <h2>CHART VIEW</h2>
                       <div className="adminworkspace-chartview">
-                            <h4>No Result</h4>
+                            {/* <h4>No Result</h4> */}
+                            <div className="adminworkspace-chartview-item">
+                              <Pie
+                                width={"100%"}
+                                data={pie}
+                                options={{
+                                  title: {
+                                    display: true,
+                                    text: 'Class Strength',
+                                    fontSize: 50,
+                                  },
+                                  legend: {
+                                    display: true,
+                                    position: 'right',
+                                  },
+                                  maintainAspectRatio: false
+                                }}
+                              />
+                              <h4>QUANTITY OF IN/OUT PRODUCTS IN MONTH</h4>
+                            </div>
+                            <div className="adminworkspace-chartview-item">
+                            <Bar
+                              width={"100%"}
+                              data={bar}
+                              options={{
+                                title: {
+                                  display: true,
+                                  text: 'Class Strength',
+                                  fontSize: 20,
+                                },
+                                legend: {
+                                  display: true,
+                                  position: 'right',
+                                },
+                                maintainAspectRatio: false
+                              }}
+                            />
+                              <h4>REMAINING PRODUCTS STORED IN WAREHOUSE</h4>
+                            </div>
                       </div>
                     </div>
                   </div>
