@@ -18,4 +18,5 @@ Free Database: https://console.aiven.io/account/a4ef4ac530fe/project/scanapp123-
 Chart: https://www.scaler.com/topics/react/react-chartjs/
 Filter: https://www.ag-grid.com/react-data-grid/getting-started/
         https://www.telerik.com/kendo-react-ui/components/datatools/filter/ 
+        https://medium.com/@utkarsh.gupta0311/reacts-filter-component-a-comprehensive-guide-b457a9b6dd2b#:~:text=At%20its%20core%2C%20a%20filter%20component%20is%20a,as%20user%20preferences%2C%20search%20queries%2C%20or%20custom%20logic.
                 

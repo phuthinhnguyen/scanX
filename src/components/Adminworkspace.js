@@ -20,6 +20,8 @@ import Slide from "@mui/material/Slide";
 import Pagination from "./Pagination";
 import { Helmet } from 'react-helmet';
 import $ from 'jquery'
+import { wrap } from "framer-motion";
+
 
 function SlideTransition(props) {
   return <Slide {...props} direction="up" />;
@@ -29,18 +31,24 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 let PageSize = 5;
 function Adminworkspace() {
-  const [searchradio, setSearchradio] = useState("qrcode");
+  const [searchradio, setSearchradio] = useState("");
   const [searchtext, setSearchtext] = useState("");
   const [tabvalue, setTabvalue] = useState(0);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-
+  const [search,setSearch] = useState({qrcode:"",scanner:"",partnumber:"",status:""})
   const handleChangetab = (event, newValue) => {
     setTabvalue(newValue);
   };
 
   const onChangeradio = (e) => {
-    setSearchradio(e.target.value);
+    setSearchtext("")
+    if (e.target.checked == true){
+      setSearchradio(e.target.value); 
+    }
+    else{
+      setSearch({...search,[e.target.value]:""})
+    }
   };
 
   const dispatch = useDispatch();
@@ -49,13 +57,15 @@ function Adminworkspace() {
   const sortedposts = state.posts.sort((a, b) => b.createdAt - a.createdAt); 
   const [currentPage, setCurrentPage] = useState(1);  
   const filterresult = sortedposts.filter((item) => {
-    if (searchradio=="qrcode" || searchradio=="status" | searchradio=="scanner"){
-      return item[searchradio].toLowerCase().includes(searchtext.toLowerCase());
-    }
-    else if (searchradio=="partnumber"){ 
-      const itemsqrcodesplit = item["qrcode"].split("/")
-      return itemsqrcodesplit[4].toLowerCase().includes(searchtext.toLowerCase());
-    }
+    // if (searchradio=="qrcode" || searchradio=="status" | searchradio=="scanner"){
+    //   return item[searchradio].toLowerCase().includes(searchtext.toLowerCase());
+    // }
+    // else if (searchradio=="partnumber"){ 
+    //   const itemsqrcodesplit = item["qrcode"].split("/")
+    //   return itemsqrcodesplit[4].toLowerCase().includes(searchtext.toLowerCase());
+    // }
+    const itemsqrcodesplit = item["qrcode"].split("/")
+    return item["qrcode"].toLowerCase().includes(search.qrcode.toLowerCase()) && item["scanner"].toLowerCase().includes(search.scanner.toLowerCase()) && itemsqrcodesplit[4].toLowerCase().includes(search.partnumber.toLowerCase()) && item["status"].toLowerCase().includes(search.status.toLowerCase())
   });
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
@@ -103,8 +113,10 @@ function Adminworkspace() {
 
   const handleChangetextsearch = (e) => {
     setSearchtext(e.target.value);
+    setSearch({...search,[searchradio]:e.target .value})
   };
-
+  console.log(searchtext)
+  console.log(search)
   const closealert = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -121,6 +133,7 @@ function Adminworkspace() {
   function edititem(item) {
     navigate("/updateitem", { state: item });
   }
+ 
   return (
     <div>
       {state.user != null && state.user.role=="admin" ? (
@@ -151,13 +164,14 @@ function Adminworkspace() {
                             id="inlineFormInputGroup"
                             placeholder="Input text search"
                             onChange={handleChangetextsearch}
+                            value={searchtext}
                           />
                         </div>
                         <div className="filter-checkbox-wrap">
                           <div className="form-check">
                             <input
                               className="form-check-input"
-                              type="radio"
+                              type="checkbox"
                               name="flexRadioDefault"
                               id="flexRadioDefault1"
                               onChange={onChangeradio}
@@ -165,39 +179,46 @@ function Adminworkspace() {
                               // checked
                             />
                             <label className="form-check-label">QR Code</label>
+                            <div style={{position:"absolute",marginTop:"50px",width:"100px",overflowWrap:"break-word"}}>{search.qrcode==""?search.qrcode:`"${search.qrcode}"`}</div>
                           </div>
                           <div className="form-check">
                             <input
                               className="form-check-input"
-                              type="radio"
-                              name="flexRadioDefault"
-                              id="flexRadioDefault2"
-                              onChange={onChangeradio}
-                              value="status"
-                            />
-                            <label className="form-check-label">Status</label>
-                          </div>
-                          <div className="form-check">
-                            <input
-                              className="form-check-input"
-                              type="radio"
-                              name="flexRadioDefault"
-                              id="flexRadioDefault3"
-                              onChange={onChangeradio}
-                              value="scanner"
-                            />
-                            <label className="form-check-label">Scanner</label>
-                          </div>
-                          <div className="form-check">
-                            <input
-                              className="form-check-input"
-                              type="radio"
+                              type="checkbox"
                               name="flexRadioDefault"
                               id="flexRadioDefault3"
                               onChange={onChangeradio}
                               value="partnumber"
                             />
                             <label className="form-check-label">Part Number</label>
+                            <div style={{position:"absolute",marginTop:"50px",width:"100px",overflowWrap:"break-word"}}>{search.partnumber==""?search.partnumber:`"${search.partnumber}"`}</div>
+                          </div>
+                          <div className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              name="flexRadioDefault"
+                              id="flexRadioDefault3"
+                              onChange={onChangeradio}
+                              value="scanner"
+                            />
+                            <label className="form-check-label">Scanner</label>
+                            <div style={{position:"absolute",marginTop:"50px",width:"100px",overflowWrap:"break-word"}}>{search.scanner==""?search.scanner:`"${search.scanner}"`}</div>
+                          </div>
+                          <div className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              name="flexRadioDefault"
+                              id="flexRadioDefault2"
+                              onChange={onChangeradio}
+                              value="status"
+                            />
+                            <label className="form-check-label">Status</label>
+                            <div style={{position:"absolute",marginTop:"50px",width:"100px",overflowWrap:"break-word"}}>{search.status==""?search.status:`"${search.status}"`}</div>
+                          </div>
+                          <div className="form-check">
+                            <label className="form-check-label">Total: {filterresult.length} rows</label>
                           </div>
                         </div>
                       </div>
