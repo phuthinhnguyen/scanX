@@ -24,7 +24,7 @@ import { wrap } from "framer-motion";
 import { Pie, Bar } from 'react-chartjs-2'
 import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables)
-
+import { ExportReactCSV } from './ExportReactCSV'
 
 
 function SlideTransition(props) {
@@ -71,6 +71,15 @@ function Adminworkspace() {
     const itemsqrcodesplit = item["qrcode"].split("/")
     return item["qrcode"].toLowerCase().includes(search.qrcode.toLowerCase()) && item["scanner"].toLowerCase().includes(search.scanner.toLowerCase()) && itemsqrcodesplit[4].toLowerCase().includes(search.partnumber.toLowerCase()) && item["status"].toLowerCase().includes(search.status.toLowerCase())
   });
+
+    // Convert filterresult to datacsv
+    var exportcsv = []
+    for (let i=0;i<filterresult.length;i++){
+      const qrcode = filterresult[i].qrcode
+      const splitqrcode = qrcode.split("/")
+      exportcsv.push({Itemcode:splitqrcode[5],Qrcode:filterresult[i].qrcode,PO:splitqrcode[0],MFGDate:splitqrcode[1],Size:splitqrcode[2],Quantity:splitqrcode[3],Partnumber:splitqrcode[4],Scanner:filterresult[i].scanner,CreateAt:convertCreatedAt(filterresult[i].createdAt),Status:filterresult[i].status})
+    }
+    
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
@@ -261,9 +270,11 @@ function Adminworkspace() {
                           <div className="form-check">
                             <label className="form-check-label">Total: {filterresult.length} rows</label>
                           </div>
+                       
+                          <ExportReactCSV csvData={exportcsv} fileName="ScanAppExportFile" />
                         </div>
                       </div>
-                      <table className="table" style={{marginTop:"50px",marginBottom:"80px"}}>
+                      <table className="table" style={{marginTop:"50px",marginBottom:"80px"}} id="datatable">
                         <thead style={{color:"white"}}>
                           <tr>
                             <td style={{fontWeight: "700",fontSize:"18px"}}>Item Code</td>
@@ -335,6 +346,7 @@ function Adminworkspace() {
                             </tr>)}
                         </tbody>
                       </table>
+                     
                       {/* <Pagination
                       className="pagination-bar"
                       currentPage={currentPage}

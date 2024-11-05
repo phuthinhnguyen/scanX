@@ -589,7 +589,7 @@ form {
 }
 
 .input-search-wrap {
-  width: 70%;
+  width: 80%;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -1275,4 +1275,14 @@ input:checked + .slider:before {
   margin-top: 20px;
   text-align: center;
 }
-
+.csvbutton{
+  padding:10px;
+  background:var(--boldyellow);
+  text-decoration:none;
+  color:var(--colortext);
+  border-radius:10px;
+}
+.csvbutton:hover{
+  background:var(--buttonhover);
+  color:var(--colortext);
+}
