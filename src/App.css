@@ -1286,3 +1286,11 @@ input:checked + .slider:before {
   background:var(--buttonhover);
   color:var(--colortext);
 }
+.positionselect{
+  width: 80px;
+  margin-top: 0;
+  margin-right: 20px;
+  scroll-behavior: auto;
+  cursor: pointer;
+  font-weight: 500;
+}

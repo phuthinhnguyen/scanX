@@ -26,6 +26,7 @@ function Updateitem() {
   const [message, setMessage] = useState("");
   // const [form, setForm] = useState(state);
   const [form, setForm] = useState({...state,scanner:name});
+ 
   useEffect(() => {
     if (user == null) {
       navigate("/");
@@ -71,6 +72,41 @@ function Updateitem() {
               <input
                 value={form.id} disabled style={{color:"white"}}
               ></input> */}
+              <h6>Position</h6>
+              <div style={{display:'flex',justifyContent:"center",alignItems:"center",width:"100%",columnGap:"10px"}}>
+                <select
+                  className="statusselect"
+                  onChange={(e) => setForm({ ...form, position:{...form.position,char:e.target.value}})}
+                  value={form.position.char}
+                >
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <option value="F">F</option>
+                    <option value="G">G</option>
+                    <option value="H">H</option>
+                    <option value="I">I</option>
+                    <option value="K">K</option>
+                </select>
+                <select
+                  className="statusselect"
+                  onChange={(e) => setForm({ ...form, position:{...form.position,number:e.target.value}})}
+                  value={form.position.number}
+                >
+                    <option value="1.1">1.1</option>
+                    <option value="1.2">1.2</option>
+                    <option value="2.1">2.1</option>
+                    <option value="2.2">2.2</option>
+                    <option value="3.1">3.1</option>
+                    <option value="3.2">3.2</option>
+                    <option value="4.1">4.1</option>
+                    <option value="4.2">4.2</option>
+                    <option value="5.1">5.1</option>
+                    <option value="5.2">5.2</option>
+                </select>    
+              </div>
               <h6>Item Code</h6>
               <input
                 onChange={(e) => setForm({ ...form, itemcode: e.target.value })}

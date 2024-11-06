@@ -280,7 +280,8 @@ export const editItem = (form,id) => {
       itemcode: form.itemcode,
       qrcode: form.qrcode,
       status: form.status,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      position:form.position
     });
     dispatch({
       type: UPDATE_ITEM_SUCCESS,
@@ -289,7 +290,7 @@ export const editItem = (form,id) => {
   };
 };
 
-export const addnewItem = (itemcode,qrcode,scanner,status) => {
+export const addnewItem = (itemcode,qrcode,scanner,status,position) => {
   return async (dispatch) => {
     const response = await axios.post(`${apiurlblogs}`, {
       createdAt: Date.now(),
@@ -297,7 +298,8 @@ export const addnewItem = (itemcode,qrcode,scanner,status) => {
       itemcode:itemcode,
       qrcode: qrcode,
       scanner: scanner, 
-      status:status
+      status:status,
+      position:position
     });
     dispatch({
       type: ADD_NEW_ITEM_SUCCESS,

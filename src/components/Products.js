@@ -67,6 +67,7 @@ function Products() {
             <table className="table" style={{marginTop:"50px",marginBottom:"80px"}}>
             <thead style={{color:"white"}}>
               <tr>
+                  <td style={{fontWeight: "700",fontSize:"18px"}}>Position</td>
                   <td style={{fontWeight: "700",fontSize:"18px"}}>Item Code</td>
                   <td style={{fontWeight: "700",fontSize:"18px"}}>QR Code</td>
                   <td style={{fontWeight: "700",fontSize:"18px"}}>PO</td>
@@ -81,6 +82,9 @@ function Products() {
             </thead>
             <tbody style={{color:"white"}}>
                 {sortedposts.map((item)=><tr key={item.id} >
+                <td>
+                  {item.position.char+item.position.number} 
+                </td>
                 <td>
                   {item.itemcode} 
                 </td>

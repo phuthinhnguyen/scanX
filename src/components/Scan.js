@@ -9,7 +9,7 @@ import Post from "./Post";
 import Slide from "@mui/material/Slide";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-
+import Select from 'react-select'
 
 // used for show snackbar and alert
 function SlideTransition(props) {
@@ -43,7 +43,9 @@ function Scan() {
     navigate("/")
   }
   const [sharethinking, setSharethinking] = useState("");
+  const [position, setPosition] = useState({char:"A",number:"1.1"});
   const [scanitem, setScanitem] = useState([])
+
   useEffect(() => {
     dispatch(getPost());
     dispatch(getallusersforposts());
@@ -52,6 +54,10 @@ function Scan() {
   const sharethinkingonChange = (e) => {
     setSharethinking(e.target.value);
   };
+  // const positiononChange = (e) => {
+  //   setPosition(e.target.value);  
+  // }
+
   const sortedposts = stateselector.posts.sort((a, b) => b.createdAt - a.createdAt);
 
   function reactionclick(emojiname, id, currentcount) {
@@ -81,7 +87,7 @@ function Scan() {
   function edititem(item) {
     navigate("/updateitem", { state: item });
   }
-  function addnewitem(qrcode,scanner) {
+  function addnewitem(qrcode,scanner,position) {
     if (qrcode!=""){
       const filterresult = sortedposts.filter((item) => {
         return item["qrcode"].includes(qrcode);
@@ -91,19 +97,24 @@ function Scan() {
           setAlert({open:true, message:"QR code already exists in database"})
         }
         else if (state=="OUT"){
-          const qrcodesplit = qrcode.split("/")
-          const itemcode = qrcodesplit[5]
-          setScanitem([...scanitem,{itemcode:itemcode,qrcode:qrcode,status:state,createat:Date.now(),scanner:scanner}])
-          dispatch(addnewItem(itemcode,qrcode,scanner,state));
-          setSharethinking("")
+          if (filterresult[0].status=="IN"){
+            const qrcodesplit = qrcode.split("/")
+            const itemcode = qrcodesplit[5]
+            setScanitem([...scanitem,{position:position.char+position.number,itemcode:itemcode,qrcode:qrcode,status:state,createat:Date.now(),scanner:scanner}])
+            dispatch(addnewItem(itemcode,qrcode,scanner,state,position));
+            setSharethinking("")
+          }
+          else if (filterresult[0].status=="OUT"){
+            setAlert({open:true, message:"QR code already exists in database"})
+          }
         }
       }
       else{
         if (state=="IN"){
           const qrcodesplit = qrcode.split("/")
           const itemcode = qrcodesplit[5]
-          setScanitem([...scanitem,{itemcode:itemcode,qrcode:qrcode,status:state,createat:Date.now(),scanner:scanner}])
-          dispatch(addnewItem(itemcode,qrcode,scanner,state));
+          setScanitem([...scanitem,{position:position,itemcode:itemcode,qrcode:qrcode,status:state,createat:Date.now(),scanner:scanner}])
+          dispatch(addnewItem(itemcode,qrcode,scanner,state,position));
           setSharethinking("")
         }
         else if (state=="OUT"){
@@ -120,7 +131,45 @@ function Scan() {
           <div className="home-body">
             <div className="home-body-wrap">
                 <div className={state=="IN" ? "statuslabelin" : "statuslabelout"}>{state}</div>
-                <div className="share-thinking" >   
+                <div className="share-thinking" > 
+                  {state=="IN"?
+                  <div>
+                    <h4 style={{marginTop:"5px",marginRight:"12px",display:"inline-block"}}>Position:</h4>
+                    <select 
+                    className="statusselect positionselect"
+                    onChange={(e)=>setPosition({...position,char:e.target.value})}
+                    value={position.char}
+                    style={{width:"60px",marginRight:"5px"}}
+                    >
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                      <option value="E">E</option>
+                      <option value="F">F</option>
+                      <option value="G">G</option>
+                      <option value="H">H</option>
+                      <option value="I">I</option>
+                      <option value="K">K</option>
+                    </select> 
+                    <select 
+                      className="statusselect positionselect"
+                      onChange={(e)=>setPosition({...position,number:e.target.value})}
+                      value={position.number}
+                      >
+                      <option value="1.1">1.1</option>
+                      <option value="1.2">1.2</option>
+                      <option value="2.1">2.1</option>
+                      <option value="2.2">2.2</option>
+                      <option value="3.1">3.1</option>
+                      <option value="3.2">3.2</option>
+                      <option value="4.1">4.1</option>
+                      <option value="4.2">4.2</option>
+                      <option value="5.1">5.1</option>
+                      <option value="5.2">5.2</option>
+                    </select>
+                  </div>
+                  : null}
                   <input
                     type="text"
                     className="form-control input-share"
@@ -139,7 +188,7 @@ function Scan() {
                   </Link> */}
                   <button
                     className="button-login share-button"
-                    onClick={() => addnewitem(sharethinking.trim(),stateselector.user.name)}
+                    onClick={() => addnewitem(sharethinking.trim(),stateselector.user.name,position)}
                   >
                     Add
                   </button>
@@ -149,6 +198,7 @@ function Scan() {
             <table className="table" style={{marginTop:"50px",marginBottom:"80px"}}>
             <thead style={{color:"white"}}>
               <tr>
+                <td style={{fontWeight: "700",fontSize:"18px"}}>Position</td>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>Item Code</td>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>QR Code</td>
                 <td style={{fontWeight: "700",fontSize:"18px"}}>Scanner</td>
@@ -159,6 +209,9 @@ function Scan() {
             </thead>
             <tbody style={{color:"white"}}>
                 {scanitem.map((item)=><tr key={item.id} >
+                  <td>
+                    {item.position.char+item.position.number} 
+                  </td>
                   <td>
                     {item.itemcode} 
                   </td>

@@ -40,7 +40,7 @@ function Adminworkspace() {
   const [tabvalue, setTabvalue] = useState(0);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const [search,setSearch] = useState({qrcode:"",scanner:"",partnumber:"",status:""})
+  const [search,setSearch] = useState({qrcode:"",scanner:"",partnumber:"",status:"",position:""})
   const handleChangetab = (event, newValue) => {
     setTabvalue(newValue);
   };
@@ -69,7 +69,8 @@ function Adminworkspace() {
     //   return itemsqrcodesplit[4].toLowerCase().includes(searchtext.toLowerCase());
     // }
     const itemsqrcodesplit = item["qrcode"].split("/")
-    return item["qrcode"].toLowerCase().includes(search.qrcode.toLowerCase()) && item["scanner"].toLowerCase().includes(search.scanner.toLowerCase()) && itemsqrcodesplit[4].toLowerCase().includes(search.partnumber.toLowerCase()) && item["status"].toLowerCase().includes(search.status.toLowerCase())
+    const itemposition = item["position"]["char"]+item["position"]["number"]
+    return item["qrcode"].toLowerCase().includes(search.qrcode.toLowerCase()) && item["scanner"].toLowerCase().includes(search.scanner.toLowerCase()) && itemsqrcodesplit[4].toLowerCase().includes(search.partnumber.toLowerCase()) && item["status"].toLowerCase().includes(search.status.toLowerCase()) && itemposition.toLowerCase().includes(search.position.toLowerCase())
   });
 
     // Convert filterresult to datacsv
@@ -77,7 +78,7 @@ function Adminworkspace() {
     for (let i=0;i<filterresult.length;i++){
       const qrcode = filterresult[i].qrcode
       const splitqrcode = qrcode.split("/")
-      exportcsv.push({Itemcode:splitqrcode[5],Qrcode:filterresult[i].qrcode,PO:splitqrcode[0],MFGDate:splitqrcode[1],Size:splitqrcode[2],Quantity:splitqrcode[3],Partnumber:splitqrcode[4],Scanner:filterresult[i].scanner,CreateAt:convertCreatedAt(filterresult[i].createdAt),Status:filterresult[i].status})
+      exportcsv.push({Position:filterresult[i].position.char.concat(filterresult[i].position.number),Itemcode:splitqrcode[5],Qrcode:filterresult[i].qrcode,PO:splitqrcode[0],MFGDate:splitqrcode[1],Size:splitqrcode[2],Quantity:splitqrcode[3],Partnumber:splitqrcode[4],Scanner:filterresult[i].scanner,CreateAt:convertCreatedAt(filterresult[i].createdAt),Status:filterresult[i].status})
     }
     
   const currentTableData = useMemo(() => {
@@ -268,6 +269,18 @@ function Adminworkspace() {
                             <div style={{position:"absolute",marginTop:"50px",width:"100px",overflowWrap:"break-word"}}>{search.status==""?search.status:`"${search.status}"`}</div>
                           </div>
                           <div className="form-check">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              name="flexRadioDefault"
+                              id="flexRadioDefault2"
+                              onChange={onChangeradio}
+                              value="position"
+                            />
+                            <label className="form-check-label">Position</label>
+                            <div style={{position:"absolute",marginTop:"50px",width:"100px",overflowWrap:"break-word"}}>{search.position==""?search.position:`"${search.position}"`}</div>
+                          </div>
+                          <div className="form-check">
                             <label className="form-check-label">Total: {filterresult.length} rows</label>
                           </div>
                        
@@ -277,6 +290,7 @@ function Adminworkspace() {
                       <table className="table" style={{marginTop:"50px",marginBottom:"80px"}} id="datatable">
                         <thead style={{color:"white"}}>
                           <tr>
+                            <td style={{fontWeight: "700",fontSize:"18px"}}>Position</td>
                             <td style={{fontWeight: "700",fontSize:"18px"}}>Item Code</td>
                             <td style={{fontWeight: "700",fontSize:"18px"}}>QR Code</td>
                             <td style={{fontWeight: "700",fontSize:"18px"}}>PO</td>
@@ -292,6 +306,9 @@ function Adminworkspace() {
                         </thead>
                         <tbody style={{color:"white"}}>
                             {filterresult.map((item, index)=><tr key={index} >
+                              <td>
+                                {item.position.char+item.position.number} 
+                              </td>
                               <td>
                                 {item.itemcode} 
                               </td>
