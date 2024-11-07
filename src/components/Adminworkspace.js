@@ -349,7 +349,7 @@ function Adminworkspace() {
                                         }} > */}
                                     <button 
                                         style={{padding: "3px 10px"}}
-                                        onClick={(e)=>edititem(item)} className="ms-1 btn btn-info">
+                                        onClick={(e)=>edititem(item)} className={item.status == "IN" ? "ms-1 btn btn-info" : "ms-1 btn btn-info disabled"}>
                                         Edit
                                     </button>
                                     <button 

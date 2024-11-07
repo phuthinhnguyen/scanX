@@ -100,8 +100,11 @@ function Scan() {
           if (filterresult[0].status=="IN"){
             const qrcodesplit = qrcode.split("/")
             const itemcode = qrcodesplit[5]
-            setScanitem([...scanitem,{position:position.char+position.number,itemcode:itemcode,qrcode:qrcode,status:state,createat:Date.now(),scanner:scanner}])
-            dispatch(addnewItem(itemcode,qrcode,scanner,state,position));
+            // const filterposition = sortedposts.filter(item => {
+            //   return item.qrcode == qrcode
+            // })
+            setScanitem([...scanitem,{position:filterresult[0].position,itemcode:itemcode,qrcode:qrcode,status:state,createat:Date.now(),scanner:scanner}])
+            dispatch(addnewItem(itemcode,qrcode,scanner,state,filterresult[0].position));
             setSharethinking("")
           }
           else if (filterresult[0].status=="OUT"){
