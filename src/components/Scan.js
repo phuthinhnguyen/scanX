@@ -52,7 +52,13 @@ function Scan() {
   }, []);
 
   const sharethinkingonChange = (e) => {
-    setSharethinking(e.target.value);
+    if (e.target.value.split("/").length-1==5){
+      addnewitem(e.target.value.trim(),stateselector.user.name,position);
+      setSharethinking("");
+    }
+    else{
+      setAlert({open:true, message:"QR Code incorrect format"})
+    }
   };
   // const positiononChange = (e) => {
   //   setPosition(e.target.value);  
@@ -104,8 +110,8 @@ function Scan() {
             //   return item.qrcode == qrcode
             // })
             setScanitem([...scanitem,{position:filterresult[0].position,itemcode:itemcode,qrcode:qrcode,status:state,createat:Date.now(),scanner:scanner}])
-            dispatch(addnewItem(itemcode,qrcode,scanner,state,filterresult[0].position));
-            setSharethinking("")
+            dispatch(addnewItem(itemcode,qrcode,scanner,state,filterresult[0].position ));
+            // setSharethinking("")
           }
           else if (filterresult[0].status=="OUT"){
             setAlert({open:true, message:"QR code already exists in database"})
@@ -118,7 +124,7 @@ function Scan() {
           const itemcode = qrcodesplit[5]
           setScanitem([...scanitem,{position:position,itemcode:itemcode,qrcode:qrcode,status:state,createat:Date.now(),scanner:scanner}])
           dispatch(addnewItem(itemcode,qrcode,scanner,state,position));
-          setSharethinking("")
+          // setSharethinking("")
         }
         else if (state=="OUT"){
           setAlert({open:true, message:"QR Code not exists in database"})
@@ -240,7 +246,7 @@ function Scan() {
                             }} > */}
                         <button 
                             style={{padding: "3px 10px"}}
-                            onClick={(e)=>edititem(item)} className={stateselector.user.role=="admin" ? "ms-1 btn btn-info" : "ms-1 btn btn-secondary disabled"}>
+                            onClick={(e)=>edititem(item)} className={stateselector.user.role=="admin" ? (item.status == "IN" ? "ms-1 btn btn-info" : "ms-1 btn btn-secondary disabled") : "ms-1 btn btn-secondary disabled"}>
                             Edit
                         </button>
                         <button 
