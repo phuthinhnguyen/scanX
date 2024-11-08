@@ -1,26 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
-import {banuser, deletepost, getallusers, increment, toadmin, deleteItem} from "../redux/action";
+import {banuser, getallusers, toadmin, deleteItem} from "../redux/action";
 import React, { useEffect, useState } from "react";
-import { useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "./Header";
-import { convertTime } from "./convertTime";
 import { convertCreatedAt } from "./convertCreatedAt";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
-import { a11yProps, TabPanel } from "./TabMui";
-// import { gettoppost } from "./Analytic";
-import { GrOverview } from "react-icons/gr";
 import { BsSearch } from "react-icons/bs";
-import Post from "./Post";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Slide from "@mui/material/Slide";
-import Pagination from "./Pagination";
 import { Helmet } from 'react-helmet';
 import $ from 'jquery'
-import { wrap } from "framer-motion";
 import { Pie, Bar } from 'react-chartjs-2'
 import { Chart, registerables } from 'chart.js'
 Chart.register(...registerables)
@@ -33,18 +22,13 @@ function SlideTransition(props) {
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-let PageSize = 5;
+
 function Adminworkspace() {
   const [searchradio, setSearchradio] = useState("");
   const [searchtext, setSearchtext] = useState("");
-  const [tabvalue, setTabvalue] = useState(0);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [search,setSearch] = useState({qrcode:"",scanner:"",partnumber:"",status:"",position:""})
-  const handleChangetab = (event, newValue) => {
-    setTabvalue(newValue);
-  };
-
   const onChangeradio = (e) => {
     setSearchtext("")
     if (e.target.checked == true){
@@ -59,15 +43,8 @@ function Adminworkspace() {
   const navigate = useNavigate();
   const state = useSelector((state) => state);
   const sortedposts = state.posts.sort((a, b) => b.createdAt - a.createdAt); 
-  const [currentPage, setCurrentPage] = useState(1);  
+ 
   const filterresult = sortedposts.filter((item) => {
-    // if (searchradio=="qrcode" || searchradio=="status" | searchradio=="scanner"){
-    //   return item[searchradio].toLowerCase().includes(searchtext.toLowerCase());
-    // }
-    // else if (searchradio=="partnumber"){ 
-    //   const itemsqrcodesplit = item["qrcode"].split("/")
-    //   return itemsqrcodesplit[4].toLowerCase().includes(searchtext.toLowerCase());
-    // }
     const itemsqrcodesplit = item["qrcode"].split("/")
     const itemposition = item["position"]["char"]+item["position"]["number"]
     return item["qrcode"].toLowerCase().includes(search.qrcode.toLowerCase()) && item["scanner"].toLowerCase().includes(search.scanner.toLowerCase()) && itemsqrcodesplit[4].toLowerCase().includes(search.partnumber.toLowerCase()) && item["status"].toLowerCase().includes(search.status.toLowerCase()) && itemposition.toLowerCase().includes(search.position.toLowerCase())
@@ -81,37 +58,12 @@ function Adminworkspace() {
       exportcsv.push({Position:filterresult[i].position.char.concat(filterresult[i].position.number),Itemcode:splitqrcode[5],Qrcode:filterresult[i].qrcode,PO:splitqrcode[0],MFGDate:splitqrcode[1],Size:splitqrcode[2],Quantity:splitqrcode[3],Partnumber:splitqrcode[4],Scanner:filterresult[i].scanner,CreateAt:convertCreatedAt(filterresult[i].createdAt),Status:filterresult[i].status})
     }
     
-  const currentTableData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * PageSize;
-    const lastPageIndex = firstPageIndex + PageSize;
-    return sortedposts.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]); 
-
-  function getavatarforpost(id){
-    if (state.allusers != null) {
-      const allusersfilter = state.allusers.filter(item => item.id == id)
-      if (allusersfilter.length==0){
-        return "https://res.cloudinary.com/dhva3lwfk/image/upload/v1688131036/gkwlvz6hllbauf7octgk.png"
-      }
-      return allusersfilter[0].avatar
-    }
-  }
   useEffect(() => {
     if(state.user==null){
       navigate("/")
     }
     dispatch(getallusers());
   }, []);
-
-  function reactionclick(emojiname, id, currentcount) {
-    dispatch(increment(emojiname, id, currentcount));
-  }
-
-  function deletepostclick(id) {
-    dispatch(deletepost(id));
-    setMessage("Your post has been deleted successfully");
-    setOpen(true);
-  }
 
   function banuserclick(id) {
     dispatch(banuser(id));
@@ -137,9 +89,6 @@ function Adminworkspace() {
     setOpen(false);
   };
 
-  function gotouserprofile(userId) {
-    navigate("/userprofileonline", { state: userId });
-  }
   function deleteitem(id) {
     dispatch(deleteItem(id));
   }
@@ -340,13 +289,6 @@ function Adminworkspace() {
                                 <div style={item.status=="IN"?{background:"#10e96a", padding:"2px", textAlign:"center", maxWidth:"100px", borderRadius:"10px"}:{background:"#e2372b", padding:"2px", textAlign:"center", maxWidth:"100px", borderRadius:"10px"}}>{item.status} </div>
                               </td>
                                 <td>
-                                    {/* <div style=
-                                        {{
-                                            position:"absolute",
-                                            right:10,
-                                            top: "50%",
-                                            transform: "translateY(-50%)",
-                                        }} > */}
                                     <button 
                                         style={{padding: "3px 10px"}}
                                         onClick={(e)=>edititem(item)} className={item.status == "IN" ? "ms-1 btn btn-info" : "ms-1 btn btn-secondary disabled"}>
@@ -357,20 +299,12 @@ function Adminworkspace() {
                                         onClick={(e)=>deleteitem(item.id)} className="btn btn-danger">
                                         Delete
                                     </button>
-                                    
-                                    {/* </div> */}
                                 </td>
                             </tr>)}
                         </tbody>
                       </table>
                      
-                      {/* <Pagination
-                      className="pagination-bar"
-                      currentPage={currentPage}
-                      totalCount={sortedposts.length}
-                      pageSize={PageSize}   
-                      onPageChange={page => setCurrentPage(page)}
-                    /> */}
+      
             </div>
                   </div>
                   <div className="col-md-6 all userlist" style={{position:"absolute",left:"0%", top:"0px"}}>
@@ -508,18 +442,12 @@ function Adminworkspace() {
               <script src="../js/filter.js"></script>
             </Helmet>
          
-          
-    
-            <div>
-                
-            </div>
-            
              <Link
               className="button-back"  
               to="/home"
             >
               Back
-        </Link>
+            </Link>
           </div>
           
           <Snackbar

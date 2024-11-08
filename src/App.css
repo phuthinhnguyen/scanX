@@ -888,30 +888,7 @@ input:checked + .slider:before {
   padding: 0;
   padding-top: 200px;
 } 
-/* .hombody-in{
-  background-color: #10e96a;
-  border-radius: 10px;
-  width: 500px;
-  height: 500px;
-  font-size: 100px;
-  font-weight: 600;
-  color: var(--colortext);
-}
-.hombody-in:hover{
-  background-color: #10ff73;
-}
-.hombody-out{
-  background-color:#e2372b;
-  border-radius: 10px;
-  width: 500px;
-  height: 500px;
-  font-size: 100px;
-  font-weight: 600;
-  color: var(--colortext);
-}
-.hombody-out:hover{
-  background-color:#fc3c2f;
-} */
+
 .statuslabelin{
   background-color: #10e96a;
   border-radius: 10px;
@@ -1115,9 +1092,7 @@ input:checked + .slider:before {
   font-weight: 300;
   max-width: 392px;
 }
-/* .chartview{
-  display: none;
-} */
+
 .adminworkspace-chartview {
   display: flex;
   justify-content: space-around;

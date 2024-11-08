@@ -1,5 +1,5 @@
-import { BAN_USER_SUCCESS, FETCH_USER_SUCCESS, GET_USERPROFILE_SUCCESS, LOGOUT_SUCCESS, SIGNUP_SUCCESS, TO_ADMIN_SUCCESS, UPLOAD_AVATAR_SUCCESS } from "./action";
-import { ADD_NEW_POST_SUCCESS, DELETE_POST_SUCCESS, FETCH_POST_SUCCESS, UPDATE_EMOJI_SUCCESS, UPDATE_POST_SUCCESS, LOGIN_SUCCESS, DELETE_ITEM_SUCCESS, ADD_NEW_ITEM_SUCCESS, UPDATE_ITEM_SUCCESS } from "./action";
+import { LOGIN_SUCCESS, BAN_USER_SUCCESS, FETCH_USER_SUCCESS, GET_USERPROFILE_SUCCESS, LOGOUT_SUCCESS, SIGNUP_SUCCESS, TO_ADMIN_SUCCESS, UPLOAD_AVATAR_SUCCESS } from "./action";
+import { FETCH_ITEM_SUCCESS, DELETE_ITEM_SUCCESS, ADD_NEW_ITEM_SUCCESS, UPDATE_ITEM_SUCCESS } from "./action";
 
 const initialState = {
   // used for loading all posts on home page
@@ -13,58 +13,8 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
 
-    case FETCH_POST_SUCCESS:
+    case FETCH_ITEM_SUCCESS:
       return { ...state, posts: action.payload };
-
-    case ADD_NEW_POST_SUCCESS:
-      return {
-        ...state,
-        posts: [...state.posts, action.payload],
-        user: {
-          ...state.user,
-          userblogs: [...state.user.userblogs, action.payload]
-        }
-      };
-
-    case UPDATE_POST_SUCCESS:
-      return {
-        ...state,
-        posts: [
-          ...state.posts.filter((item) => item.id != action.payload.id),
-          action.payload
-        ],
-        user: {
-          ...state.user,
-          userblogs: [
-            ...state.user.userblogs.filter(
-              (item) => item.id != action.payload.id
-            ),
-            action.payload
-          ]
-        }
-      };
-
-    case DELETE_POST_SUCCESS:
-      return {
-        ...state,
-        posts: [...state.posts.filter((item) => item.id != action.payload)],
-        user: {
-          ...state.user,
-          userblogs: [
-            ...state.user.userblogs.filter((item) => item.id != action.payload)
-          ]
-        }
-      };
-
-    case UPDATE_EMOJI_SUCCESS:
-      return {
-        ...state,
-        posts: [
-          ...state.posts.filter((item) => item.id != action.payload.id),
-          action.payload
-        ],
-        user: { ...state.user, userblogs: [...state.user.userblogs.filter(item => item.id != action.payload.id), state.user.id == action.payload.userId && action.payload] }
-      };
 
     case FETCH_USER_SUCCESS:
       return {

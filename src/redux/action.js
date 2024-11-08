@@ -1,10 +1,6 @@
 import axios from "axios";
-export const FETCH_POST_SUCCESS = "FETCH_POST_SUCCESS";
+export const FETCH_ITEM_SUCCESS = "FETCH_ITEM_SUCCESS";
 export const FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS";
-export const ADD_NEW_POST_SUCCESS = "ADD_NEW_POST_SUCCESS";
-export const UPDATE_POST_SUCCESS = "UPDATE_POST_SUCCESS";
-export const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS";
-export const UPDATE_EMOJI_SUCCESS = "UPDATE_EMOJI_SUCCESS";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const GET_USERPROFILE_SUCCESS = "GET_USERPROFILE_SUCCESS";
@@ -19,78 +15,14 @@ export const ADD_NEW_ITEM_SUCCESS = "ADD_NEW_ITEM_SUCCESS";
 // user 2 api, first one includes information about users (id,username,password,avatar,coverphoto...)
 // last one includes information about posts (id,title,body,author...) 
 const apiurlusers = "https://649117572f2c7ee6c2c7b99a.mockapi.io/users";
-const apiurlblogs = "https://67221aae2108960b9cc2ea5b.mockapi.io/scanXdata";
+const apiurlitems = "https://67221aae2108960b9cc2ea5b.mockapi.io/scanXdata";
 
 // get all posts to load in home page
-export const getPost = () => {
+export const getItem = () => {
   return async (dispatch) => {
-    const response = await axios.get(apiurlblogs);
+    const response = await axios.get(apiurlitems);
     dispatch({
-      type: FETCH_POST_SUCCESS,
-      payload: response.data
-    });
-  };
-};
-
-// call api when user add new post/update/delete post
-export const addnewpost = (form, user) => {
-  return async (dispatch) => {
-    const response = await axios.post(`${apiurlblogs}`, {
-      createdAt: Date.now(),
-      userId: user.id,
-      title: form.title,
-      body: form.body,
-      author: form.author,
-      thumbsUp: 0,
-      wow: 0,
-      heart: 0,
-      rocket: 0,
-      coffee: 0,
-      view: 0,
-      name: user.name,
-    });
-    dispatch({
-      type: ADD_NEW_POST_SUCCESS,
-      payload: response.data
-    });
-  };
-};
-
-export const updatepost = (form) => {
-  return async (dispatch) => {
-    const response = await axios.put(`${apiurlblogs}/${form.id}`, {
-      title: form.title,
-      body: form.body,
-      author: form.author,
-      createdAt: Date.now()
-    });
-    dispatch({
-      type: UPDATE_POST_SUCCESS,
-      payload: response.data
-    });
-  };
-};
-
-
-export const deletepost = (id) => {
-  return async (dispatch) => {
-    const response = await axios.delete(`${apiurlblogs}/${id}`);
-    dispatch({
-      type: DELETE_POST_SUCCESS,
-      payload: id
-    });
-  };
-};
-
-
-// call api when user click to reactions in post
-export const increment = (emojiname, id, currentcount) => {
-  return async (dispatch) => {
-    const response = await axios.put(`${apiurlblogs}/${id}`, {
-      [emojiname]: currentcount + 1
-    });
-    dispatch({
-      type: UPDATE_EMOJI_SUCCESS,
+      type: FETCH_ITEM_SUCCESS,
       payload: response.data
     });
   };
@@ -180,7 +112,7 @@ export const signup = (form) => {
         role: form.role,
         // new user have default avatar and coverphoto as link below
         avatar: "https://res.cloudinary.com/dhva3lwfk/image/upload/v1688131036/gkwlvz6hllbauf7octgk.png",
-        coverphoto: "https://res.cloudinary.com/dhva3lwfk/image/upload/v1687881220/Asset_5_pakypu.png"
+        coverphoto: "https://res.cloudinary.com/dhva3lwfk/image/upload/v1731070128/cover2_kezyyd.png"
       })
       checksignupresult = "Sign up successfully"
     }
@@ -265,7 +197,7 @@ export const uploadavatar = (image, id, type) => {
 
 export const deleteItem= (id) => {
   return async (dispatch) => {
-    const response = await axios.delete(`${apiurlblogs}/${id}`);
+    const response = await axios.delete(`${apiurlitems}/${id}`);
     dispatch({
       type: DELETE_ITEM_SUCCESS,
       payload: id
@@ -275,7 +207,7 @@ export const deleteItem= (id) => {
 
 export const editItem = (form,id) => {
   return async (dispatch) => {
-    const response = await axios.put(`${apiurlblogs}/${id}`, {
+    const response = await axios.put(`${apiurlitems}/${id}`, {
       scanner: form.scanner,
       itemcode: form.itemcode,
       qrcode: form.qrcode,
@@ -292,9 +224,8 @@ export const editItem = (form,id) => {
 
 export const addnewItem = (itemcode,qrcode,scanner,status,position) => {
   return async (dispatch) => {
-    const response = await axios.post(`${apiurlblogs}`, {
+    const response = await axios.post(`${apiurlitems}`, {
       createdAt: Date.now(),
-      // userId: user.id,
       itemcode:itemcode,
       qrcode: qrcode,
       scanner: scanner, 

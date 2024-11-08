@@ -24,9 +24,8 @@ function Updateitem() {
   const name = user.name;
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-  // const [form, setForm] = useState(state);
   const [form, setForm] = useState({...state,scanner:name});
- 
+
   useEffect(() => {
     if (user == null) {
       navigate("/");
@@ -68,10 +67,6 @@ function Updateitem() {
               className="addnewpost-body-form"
               onSubmit={(e) => submitform(e)}
             >
-              {/* <h6>Item ID</h6>
-              <input
-                value={form.id} disabled style={{color:"white"}}
-              ></input> */}
               <h6>Position</h6>
               <div style={{display:'flex',justifyContent:"center",alignItems:"center",width:"100%",columnGap:"10px"}}>
                 <select

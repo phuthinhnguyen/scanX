@@ -1,11 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getPost, getallusersforposts, increment, deleteItem, addnewItem } from "../redux/action";
+import { getItem, getallusersforposts, deleteItem, addnewItem } from "../redux/action";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { convertCreatedAt } from "./convertCreatedAt";
 import Header from "./Header";
-import { convertTime } from "./convertTime";
-import Post from "./Post";
 import Slide from "@mui/material/Slide";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -47,7 +45,7 @@ function Scan() {
   const [scanitem, setScanitem] = useState([])
 
   useEffect(() => {
-    dispatch(getPost());
+    dispatch(getItem());
     dispatch(getallusersforposts());
   }, []);
 
@@ -60,28 +58,9 @@ function Scan() {
       setAlert({open:true, message:"QR Code incorrect format"})
     }
   };
-  // const positiononChange = (e) => {
-  //   setPosition(e.target.value);  
-  // }
-
+ 
   const sortedposts = stateselector.posts.sort((a, b) => b.createdAt - a.createdAt);
 
-  function reactionclick(emojiname, id, currentcount) {
-    dispatch(increment(emojiname, id, currentcount));
-  }
-  function gotouserprofile(userId) {
-    navigate("/userprofileonline", { stateselector: userId });
-  }
-
-  function getavatarforpost(id) {
-    if (stateselector.allusers != null) {
-      const allusersfilter = stateselector.allusers.filter(item => item.id == id)
-      if (allusersfilter.length==0){
-        return "https://res.cloudinary.com/dhva3lwfk/image/upload/v1688131036/gkwlvz6hllbauf7octgk.png"
-      }
-      return allusersfilter[0].avatar
-    }
-  }
   function deleteitem(qrcode) {
     const filterqrcode = sortedposts.filter(item => {
       return item["qrcode"].toLowerCase().includes(qrcode.toLowerCase());
@@ -106,12 +85,8 @@ function Scan() {
           if (filterresult[0].status=="IN"){
             const qrcodesplit = qrcode.split("/")
             const itemcode = qrcodesplit[5]
-            // const filterposition = sortedposts.filter(item => {
-            //   return item.qrcode == qrcode
-            // })
             setScanitem([...scanitem,{position:filterresult[0].position,itemcode:itemcode,qrcode:qrcode,status:state,createat:Date.now(),scanner:scanner}])
             dispatch(addnewItem(itemcode,qrcode,scanner,state,filterresult[0].position ));
-            // setSharethinking("")
           }
           else if (filterresult[0].status=="OUT"){
             setAlert({open:true, message:"QR code already exists in database"})
@@ -124,7 +99,6 @@ function Scan() {
           const itemcode = qrcodesplit[5]
           setScanitem([...scanitem,{position:position,itemcode:itemcode,qrcode:qrcode,status:state,createat:Date.now(),scanner:scanner}])
           dispatch(addnewItem(itemcode,qrcode,scanner,state,position));
-          // setSharethinking("")
         }
         else if (state=="OUT"){
           setAlert({open:true, message:"QR Code not exists in database"})
@@ -188,13 +162,6 @@ function Scan() {
                     onChange={sharethinkingonChange}
                     value={sharethinking}
                   />
-                  {/* <Link
-                    to="/addnewitem"
-                    stateselector={sharethinking}
-                    className="button-login share-button"
-                  >
-                    Scan
-                  </Link> */}
                   <button
                     className="button-login share-button"
                     onClick={() => addnewitem(sharethinking.trim(),stateselector.user.name,position)}
@@ -237,13 +204,6 @@ function Scan() {
                     <div style={item.status=="IN"?{background:"#10e96a", padding:"2px", textAlign:"center", maxWidth:"100px", borderRadius:"10px"}:{background:"#e2372b", padding:"2px", textAlign:"center", maxWidth:"100px", borderRadius:"10px"}}>{item.status} </div> 
                   </td>
                     <td>
-                        {/* <div style=
-                            {{
-                                position:"absolute",
-                                right:10,
-                                top: "50%",
-                                transform: "translateY(-50%)",
-                            }} > */}
                         <button 
                             style={{padding: "3px 10px"}}
                             onClick={(e)=>edititem(item)} className={stateselector.user.role=="admin" ? (item.status == "IN" ? "ms-1 btn btn-info" : "ms-1 btn btn-secondary disabled") : "ms-1 btn btn-secondary disabled"}>
@@ -254,8 +214,6 @@ function Scan() {
                             onClick={(e)=>deleteitem(item.qrcode)} className="btn btn-danger">
                             Delete
                         </button>
-                        
-                        {/* </div> */}
                     </td>
                 </tr>)}
             </tbody>

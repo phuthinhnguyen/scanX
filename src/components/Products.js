@@ -1,11 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getPost, getallusersforposts, increment, deleteItem, addnewItem } from "../redux/action";
+import { getItem, getallusersforposts } from "../redux/action";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { convertCreatedAt } from "./convertCreatedAt";
 import Header from "./Header";
-import { convertTime } from "./convertTime";
-import Post from "./Post";
 import Slide from "@mui/material/Slide";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -29,7 +27,6 @@ const alrertstylesuccess = {
 function Products() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { state } = useLocation();
   const [alert, setAlert] = useState({ open: false, message: "" });
   const stateselector = useSelector((state) => state);
   const closealert = (event, reason) => {
@@ -43,17 +40,13 @@ function Products() {
     navigate("/")
   }
 
-  const [scanitem, setScanitem] = useState([])
   useEffect(() => {
-    dispatch(getPost());
+    dispatch(getItem());
     dispatch(getallusersforposts());
   }, []);
 
 
   const sortedposts = stateselector.posts.sort((a, b) => b.createdAt - a.createdAt);
-
-
-
 
   return (
     <div>

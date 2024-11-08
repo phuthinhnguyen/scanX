@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {useState} from 'react';
-import {LOGOUT_SUCCESS, getPost, getUserprofile} from "../redux/action";
+import {LOGOUT_SUCCESS, getItem, getUserprofile} from "../redux/action";
 import React from "react";
 import Box from "@mui/material/Box";
 import Tooltip from "@mui/material/Tooltip";
@@ -12,7 +11,7 @@ import Menu from "@mui/material/Menu";
 import { Helmet } from 'react-helmet';
 import $ from 'jquery'
 
-function Header(props) {
+function Header() {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const navigate = useNavigate();
@@ -26,7 +25,7 @@ function Header(props) {
   }
 
   function homeclick() {
-    dispatch(getPost());
+    dispatch(getItem());
   }
   function userprofileclick() {
     dispatch(getUserprofile(state.posts, state.user));
@@ -61,9 +60,6 @@ function Header(props) {
             Products
           </Link>
         )}
-        {/* <Link to="/addnewpost" className="header-link">
-          New Post
-        </Link> */}
         {state.user.role == "admin" && (
           <Link to="/adminworkspace" className="header-link">
             Admin
