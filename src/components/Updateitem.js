@@ -38,7 +38,7 @@ function Updateitem() {
   function submitform(e) {
     e.preventDefault();
     const filterqrcode = sortedposts.filter(item=>{
-      return item["itemcode"].toLowerCase().includes(form.itemcode.toLowerCase())
+      return item["itemcode"].toLowerCase().includes(form.itemcode.toLowerCase()) && item["status"]=="IN"
     })
     dispatch(editItem(form, filterqrcode[0].id));
     setMessage("Your Item has been updated successfully");
