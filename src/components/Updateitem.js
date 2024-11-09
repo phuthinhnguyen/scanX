@@ -38,7 +38,7 @@ function Updateitem() {
   function submitform(e) {
     e.preventDefault();
     const filterqrcode = sortedposts.filter(item=>{
-      return item["qrcode"].toLowerCase().includes(form.qrcode.toLowerCase())
+      return item["itemcode"].toLowerCase().includes(form.itemcode.toLowerCase())
     })
     dispatch(editItem(form, filterqrcode[0].id));
     setMessage("Your Item has been updated successfully");
@@ -104,7 +104,7 @@ function Updateitem() {
               </div>
               <h6>Item Code</h6>
               <input
-                onChange={(e) => setForm({ ...form, itemcode: e.target.value })}
+                onChange={(e) => setForm({ ...form, itemcode: e.target.value })} disabled style={{color:"white"}}
                 value={form.itemcode}
               ></input>
               <h6>QR Code</h6>
@@ -122,6 +122,8 @@ function Updateitem() {
                 className="statusselect"
                 onChange={(e) => setForm({ ...form, status: e.target.value })}
                 value={form.status}
+                style={{color:"white",backgroundColor:"rgb(89, 90, 90)"}}
+                disabled
               >
                 <option value="IN">IN</option>
                 <option value="OUT">OUT</option>

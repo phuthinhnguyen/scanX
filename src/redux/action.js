@@ -206,10 +206,11 @@ export const deleteItem= (id) => {
 };
 
 export const editItem = (form,id) => {
+  const qrcodesplit = form.qrcode.split("/")
   return async (dispatch) => {
     const response = await axios.put(`${apiurlitems}/${id}`, {
       scanner: form.scanner,
-      itemcode: form.itemcode,
+      itemcode: qrcodesplit[5],
       qrcode: form.qrcode,
       status: form.status,
       createdAt: Date.now(),
